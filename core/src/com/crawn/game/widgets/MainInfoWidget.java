@@ -5,11 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.crawn.game.model.PlayAccount;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.callbacks.RedrawMainInfo;
 
 public class MainInfoWidget extends Table implements RedrawMainInfo {
-    MainInfoWidget() {
+    MainInfoWidget(PlayAccount account) {
         final float avatarSize = Gdx.graphics.getHeight() * 80 / Gdx.graphics.getWidth();
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
 
@@ -27,6 +28,7 @@ public class MainInfoWidget extends Table implements RedrawMainInfo {
         add(new ImageButton(skin, "avatar")).size(avatarSize);
         add(addInfo);
         setPosition(0, Gdx.graphics.getHeight() - avatarSize);
+        account.registerRedrawCallback(this);
     }
 
     @Override

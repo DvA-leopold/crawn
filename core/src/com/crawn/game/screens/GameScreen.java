@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.Crawn;
@@ -33,7 +34,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        new GameWidgetGroup(account);
+        final Stage stage = ((Crawn) Gdx.app.getApplicationListener()).getStage();
+        stage.addActor(new GameWidgetGroup(account));
     }
 
     @Override
