@@ -1,0 +1,46 @@
+{
+com.badlogic.gdx.graphics.Color: {
+	RGBA_163_241_23_255: {
+		r: 0.08457315
+		g: 0.80333334
+		b: 0
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		imageUp: tab
+		imageDown: tab-pressed
+		imageChecked: tab-pressed
+		pressedOffsetY: 3
+	}
+	video_content: {
+		imageUp: Circle-icons-videocameracompact.svg
+		pressedOffsetX: -5
+		pressedOffsetY: -5
+	}
+	photo_content: {
+		imageUp: Camera-icon
+		pressedOffsetX: -5
+		pressedOffsetY: -5
+	}
+	music_content: {
+		imageUp: Sound-Music-icon
+		pressedOffsetX: -5
+		pressedOffsetY: -5
+	}
+	avatar: {
+		imageUp: avatar
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: game_widget_skin
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}

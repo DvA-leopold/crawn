@@ -1,0 +1,29 @@
+
+preload_skin.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+font-export
+  rotate: false
+  xy: 1, 19
+  size: 98, 98
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+progress-bar-knob-vertical
+  rotate: false
+  xy: 1, 16
+  size: 10, 1
+  orig: 10, 1
+  offset: 0, 0
+  index: -1
+progress-bar-vertical
+  rotate: false
+  xy: 101, 88
+  size: 16, 29
+  split: 0, 0, 7, 6
+  pad: 0, 0, 3, 3
+  orig: 16, 29
+  offset: 0, 0
+  index: -1

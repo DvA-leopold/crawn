@@ -1,0 +1,46 @@
+{
+com.badlogic.gdx.graphics.Color: {
+	RGBA_163_241_23_255: {
+		r: 0.08457315
+		g: 0.80333334
+		b: 0
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	progress-bar-knob-vertical_green: {
+		name: progress-bar-knob-vertical
+		color: {
+			r: 0
+			g: 0.8300001
+			b: 0.06160434
+			a: 1
+		}
+	}
+	progress-bar-vertical_gray: {
+		name: progress-bar-vertical
+		color: {
+			r: 0.9066667
+			g: 0.9066667
+			b: 0.9066667
+			a: 1
+		}
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: preload_skin
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-vertical: {
+		background: progress-bar-vertical
+		knobBefore: progress-bar-knob-vertical_green
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}
