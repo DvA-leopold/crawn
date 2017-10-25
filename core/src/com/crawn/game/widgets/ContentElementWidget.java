@@ -12,27 +12,20 @@ import com.crawn.game.widgets.callbacks.RedrawContent;
 class ContentElementWidget extends Table implements RedrawContent {
     ContentElementWidget(final Content content) {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
-        contentLabel = new Label(content.getTitle(), skin);
-        contentPicture = new ImageButton(skin, content.getImageStyle());
+        final Label contentLabel = new Label(content.getTitle(), skin);
+        final ImageButton contentPicture = new ImageButton(skin, content.getImageStyle());
         contentPicture.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 content.addViews();
-                setViewsLabel(content.getViews(false), "");
+                views.setText("views: " + content.getViews(false));
             }
         });
 
-        likes = new Label(null, skin);
-        setLikesLabel(content.getLikes(false), "");
-
-        dislikes = new Label(null, skin);
-        setDislikeLabel(content.getDislikes(false), "");
-
-        views = new Label(null, skin);
-        setViewsLabel(content.getViews(false), "");
-
-        reposts = new Label(null, skin);
-        setRepostsLabel(content.getReposts(false), "");
+        likes = new Label("likes: " + content.getLikes(false), skin);
+        dislikes = new Label("dislikes: " + content.getDislikes(false), skin);
+        views = new Label("views: " + content.getViews(false), skin);
+        reposts = new Label("reposts: " + content.getReposts(false), skin);
 
         final float pickSize = Gdx.graphics.getHeight() * 90 / Gdx.graphics.getWidth();
         add(contentPicture).size(pickSize);
@@ -46,32 +39,14 @@ class ContentElementWidget extends Table implements RedrawContent {
         add(verticalGroup);
     }
 
-    public void setLikesLabel(long likes, final String likesPrefix) {
-        this.likes.setText("likes: " + likes + likesPrefix);
-    }
-
-    public void setDislikeLabel(long dislikes, final String dislikesPrefix) {
-        this.dislikes.setText("dislikes: " + dislikes + dislikesPrefix);
-    }
-
-    public void setViewsLabel(long views, final String viewsPrefix) {
-        this.views.setText("views: " + views + viewsPrefix);
-    }
-
-    public void setRepostsLabel(long reposts, final String repostsPrefix) {
-        this.reposts.setText("reposts: " + reposts + repostsPrefix);
-    }
-
     @Override
     public void redraw(long likes, long dislikes, long views, long reposts) {
-        setLikesLabel(likes, "");
-        setDislikeLabel(dislikes, "");
-        setViewsLabel(views, "");
-        setRepostsLabel(reposts, "");
+        this.likes.setText("likes: " + likes);
+        this.dislikes.setText("dislikes: " + likes);
+        this.views.setText("views: " + views);
+        this.reposts.setText("reposts: " + reposts);
     }
 
-    final private ImageButton contentPicture;
-    final private Label contentLabel;
     final private Label likes;
     final private Label dislikes;
     final private Label views;

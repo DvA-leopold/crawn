@@ -76,6 +76,10 @@ final public class PlayAccount {
     public long getMoney() {
         return money;
     }
+    
+    public long getRating() {
+        return rating;
+    }
 
     public void registerRedrawCallback(RedrawMainInfo callback) {
         this.callback = callback;

@@ -9,6 +9,7 @@ import com.crawn.game.model.PlayAccount;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.callbacks.RedrawMainInfo;
 
+
 public class MainInfoWidget extends Table implements RedrawMainInfo {
     MainInfoWidget(PlayAccount account) {
         final float avatarSize = Gdx.graphics.getHeight() * 80 / Gdx.graphics.getWidth();
@@ -19,10 +20,10 @@ public class MainInfoWidget extends Table implements RedrawMainInfo {
         final Table addInfo = new Table().left();
 
         addInfo.setSize(Gdx.graphics.getWidth(), avatarSize);
-        addInfo.add(new Label("nick name: ", skin)).left().row();
-        moneyLabel = new Label("money: ", skin);
+        addInfo.add(new Label("nick name: " + account.getNickName(), skin)).left().row();
+        moneyLabel = new Label("money: " + account.getMoney(), skin);
         addInfo.add(moneyLabel).left().row();
-        ratingLabel = new Label("rating: ", skin);
+        ratingLabel = new Label("rating: " + account.getRating(), skin);
         addInfo.add(ratingLabel).left();
 
         add(new ImageButton(skin, "avatar")).size(avatarSize);
