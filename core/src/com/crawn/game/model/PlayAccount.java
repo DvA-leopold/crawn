@@ -8,10 +8,10 @@ import java.util.Vector;
 
 
 final public class PlayAccount {
-    public PlayAccount(final String accountName) {
+    public PlayAccount(final String accountName, long money, long rating) {
         this.nickName = accountName;
-        this.money = 0;
-        this.rating = 0;
+        this.money = money;
+        this.rating = rating;
 
         this.accountContent = new Vector<>();
         Timer.instance().scheduleTask(new Timer.Task() {
@@ -26,7 +26,7 @@ final public class PlayAccount {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                callback.redraw(money, rating);
+                callback.redraw(PlayAccount.this.money, PlayAccount.this.rating);
             }
         }, 10, 10, 10);
     }
@@ -76,7 +76,7 @@ final public class PlayAccount {
     public long getMoney() {
         return money;
     }
-    
+
     public long getRating() {
         return rating;
     }

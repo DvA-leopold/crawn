@@ -21,9 +21,9 @@ public class GameScreen implements Screen {
     GameScreen() {
         batch = ((Crawn) Gdx.app.getApplicationListener()).getMainBatch();
         background = new Sprite((Texture) ResourceManager.instance().get("textures/bg.jpg"));
-        account = new PlayAccount("awesome acc");
+        account = new PlayAccount("awesome acc", 0 , 0);
 
-        for(int i = 0; i < 15; i++) {
+        for (int i = 0; i < 15; i++) {
             account.addContentElement(new VideoContent("my awesome vid", 5));
             account.addContentElement(new PhotoContent("my awesome photo", 19));
             account.addContentElement(new MusicContent("awesome sound", 33));

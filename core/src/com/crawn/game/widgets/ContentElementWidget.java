@@ -9,7 +9,7 @@ import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.callbacks.RedrawContent;
 
 
-class ContentElementWidget extends Table implements RedrawContent {
+final class ContentElementWidget extends Table implements RedrawContent {
     ContentElementWidget(final Content content) {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
         final Label contentLabel = new Label(content.getTitle(), skin);

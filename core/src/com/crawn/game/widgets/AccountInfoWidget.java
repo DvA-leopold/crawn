@@ -5,13 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.crawn.game.model.PlayAccount;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.callbacks.RedrawMainInfo;
 
 
-public class MainInfoWidget extends Table implements RedrawMainInfo {
-    MainInfoWidget(PlayAccount account) {
+final class AccountInfoWidget extends Table implements RedrawMainInfo {
+    AccountInfoWidget(PlayAccount account) {
         final float avatarSize = Gdx.graphics.getHeight() * 80 / Gdx.graphics.getWidth();
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
 
@@ -26,10 +27,15 @@ public class MainInfoWidget extends Table implements RedrawMainInfo {
         ratingLabel = new Label("rating: " + account.getRating(), skin);
         addInfo.add(ratingLabel).left();
 
-        add(new ImageButton(skin, "avatar")).size(avatarSize);
+        avatarButton = new ImageButton(skin, "avatar");
+        add(avatarButton).size(avatarSize);
         add(addInfo);
         setPosition(0, Gdx.graphics.getHeight() - avatarSize);
         account.registerRedrawCallback(this);
+    }
+
+    void setListener(ClickListener avatarClickListener) {
+        avatarButton.addListener(avatarClickListener);
     }
 
     @Override
@@ -39,6 +45,7 @@ public class MainInfoWidget extends Table implements RedrawMainInfo {
     }
 
 
+    final private ImageButton avatarButton;
     final private Label moneyLabel;
     final private Label ratingLabel;
 }
