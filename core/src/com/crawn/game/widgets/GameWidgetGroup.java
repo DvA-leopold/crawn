@@ -80,10 +80,13 @@ public final class GameWidgetGroup extends Table {
         buttons.get(0).addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (buttons.get(0).isChecked()) {
+                System.out.println("before");
+                if (!buttons.get(0).isChecked()) {
+                    buttons.get(0).setChecked(true);
                     return;
                 }
-                buttons.get(0).setChecked(true);
+                System.out.println("after");
+
                 accountsPane.setVisible(false);
                 accountsContentPane.setVisible(true);
             }
@@ -93,9 +96,9 @@ public final class GameWidgetGroup extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (!buttons.get(1).isChecked()) {
+                    buttons.get(1).setChecked(true);
                     return;
                 }
-                buttons.get(1).setChecked(true);
                 accountsPane.setVisible(true);
                 accountsContentPane.setVisible(false);
             }

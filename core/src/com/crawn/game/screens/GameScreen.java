@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         batch.disableBlending();
-        batch.draw(background, 0, 0);
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.enableBlending();
     }
 
