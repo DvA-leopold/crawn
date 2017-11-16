@@ -91,9 +91,9 @@ final public class HomeWidget extends Table {
         produceSettingsWidow.add(contentQuality);
         produceSettingsWidow.add(settingsGroup).row();
         final Table buttonGroup = new Table();
-        final ImageButton makeContentButton = createMakeContentButton(skin, playAccount, contentTitleField, contentQuality, contentTypeSelectBox);
-        buttonGroup.add(makeContentButton).size(BUTTON_SIZE).right();
-        buttonGroup.add(createDontMakeContentButton(skin)).size(BUTTON_SIZE).right();
+        final ImageButton approveContentButton = createApproveContentButton(skin, playAccount, contentTitleField, contentQuality, contentTypeSelectBox);
+        buttonGroup.add(approveContentButton).size(BUTTON_SIZE).right();
+        buttonGroup.add(createDiscardContentButton(skin)).size(BUTTON_SIZE).right();
         produceSettingsWidow.add(buttonGroup).colspan(2);
         final Table windowTable = new Table();
         windowTable.add(produceSettingsWidow).size(Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / 2.5f).center();
@@ -112,7 +112,7 @@ final public class HomeWidget extends Table {
         return producingContent;
     }
 
-    private ImageButton createDontMakeContentButton(final Skin skin) {
+    private ImageButton createDiscardContentButton(final Skin skin) {
         final ImageButton dontMakeContentButton = new ImageButton(skin, "dont_make_content");
         dontMakeContentButton.addListener(new ClickListener() {
             @Override
@@ -125,11 +125,11 @@ final public class HomeWidget extends Table {
         return dontMakeContentButton;
     }
 
-    private ImageButton createMakeContentButton(final Skin skin,
-                                                final PlayAccount playAccount,
-                                                final TextField contentTitleField,
-                                                final Slider contentQuality,
-                                                final SelectBox<String> contentTypeSelectBox) {
+    private ImageButton createApproveContentButton(final Skin skin,
+                                                   final PlayAccount playAccount,
+                                                   final TextField contentTitleField,
+                                                   final Slider contentQuality,
+                                                   final SelectBox<String> contentTypeSelectBox) {
         final ImageButton makeContentButton = new ImageButton(skin, "make_content");
         makeContentButton.addListener(new ClickListener() {
             @Override
