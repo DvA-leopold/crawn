@@ -5,7 +5,7 @@ import com.crawn.game.model.PlayAccount;
 import java.util.Vector;
 
 
-public class AccountGenerator {
+final public class AccountGenerator {
     private static PlayAccount generateAccount() {
         return new PlayAccount(RandomNamesGenerator.generateAccountName(), 0, 0);
     }

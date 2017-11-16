@@ -1,6 +1,6 @@
 package com.crawn.game.model.generators;
 
-public class RandomNamesGenerator {
+final public class RandomNamesGenerator {
     static public String generateAccountName() {
         return "some random account name";
     }

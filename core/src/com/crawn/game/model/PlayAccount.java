@@ -2,7 +2,6 @@ package com.crawn.game.model;
 
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.model.content.*;
-import com.crawn.game.widgets.ContentElementWidget;
 import com.crawn.game.widgets.callbacks.RedrawMainInfo;
 import com.crawn.game.widgets.HomeWidget;
 

@@ -18,7 +18,7 @@ import static com.crawn.game.model.content.ContentTypeConverter.stringToType;
 import static com.crawn.game.utils.StaticUtils.*;
 
 
-public final class HomeWidget extends Table {
+final public class HomeWidget extends Table {
     HomeWidget(final PlayAccount playAccount) {
         setVisible(false);
         this.producingContentContainer = new HashMap<>();

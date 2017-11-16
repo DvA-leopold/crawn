@@ -16,7 +16,7 @@ import java.util.Vector;
 import static com.crawn.game.utils.StaticUtils.MENU_BUTTON_HEIGHT;
 
 
-public final class GameWidgetGroup extends Table {
+final public class GameWidgetGroup extends Table {
     public GameWidgetGroup(final PlayAccount account) {
         setFillParent(true);
         top().left();

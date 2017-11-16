@@ -29,5 +29,5 @@ final public class ContentTypeConverter {
     }
 
 
-    private static HashMap<String, ContentType> typesMapping;
+    final private static HashMap<String, ContentType> typesMapping;
 }

@@ -24,7 +24,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 
-public class ResourceManager {
+final public class ResourceManager {
     private ResourceManager() {
         assetManager = new AssetManager();
         assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
