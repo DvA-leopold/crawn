@@ -31,8 +31,7 @@ final public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        final Stage stage = ((Crawn) Gdx.app.getApplicationListener()).getStage();
-        stage.addActor(new GameWidgetGroup(account));
+        ((Crawn) Gdx.app.getApplicationListener()).getStage().addActor(new GameWidgetGroup(account));
     }
 
     @Override

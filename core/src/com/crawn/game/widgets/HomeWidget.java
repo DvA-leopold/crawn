@@ -65,12 +65,10 @@ final public class HomeWidget extends Table {
                 produceSettingsWidowTable.setVisible(true);
             }
         });
-        final HorizontalGroup produceButtonContainer = new HorizontalGroup();
-        produceButtonContainer.addActor(produceButton);
 
         final Stack statusMenuStack = new Stack();
         statusMenuStack.add(producingContentPane);
-        statusMenuStack.add(produceButtonContainer);
+        statusMenuStack.add(produceButton.pad(BUTTON_PADDING));
 
         produceStatisticsMenu.add(statusMenuStack).expand().right().bottom();
         produceStatisticsMenu.setDebug(true);
@@ -82,8 +80,6 @@ final public class HomeWidget extends Table {
         final TextField contentTitleField = new TextField("title name", skin, "content_title_field");
         final SelectBox<String> contentTypeSelectBox = initContentTypeSelectBox(skin);
         final Slider contentQuality = initContentQualitySlider(skin);
-        final ImageButton makeContentButton = createMakeContentButton(skin, playAccount, contentTitleField, contentQuality, contentTypeSelectBox);
-        final ImageButton dontMakeContentButton = createDontMakeContentButton(skin);
 
         final VerticalGroup settingsGroup = new VerticalGroup().columnLeft();
         settingsGroup.addActor(contentTitleField);
@@ -92,16 +88,17 @@ final public class HomeWidget extends Table {
         final Window produceSettingsWidow = new Window("produce settings", skin, "produce_settings_window");
         produceSettingsWidow.setModal(true);
         produceSettingsWidow.setMovable(false);
-        produceSettingsWidow.setDebug(true);
         produceSettingsWidow.add(contentQuality);
         produceSettingsWidow.add(settingsGroup).row();
         final Table buttonGroup = new Table();
-        buttonGroup.add(makeContentButton).size(BUTTON_SIZE).padLeft(BUTTON_PADDING).right();
-        buttonGroup.add(dontMakeContentButton).size(BUTTON_SIZE).padLeft(BUTTON_PADDING).right();
+        final ImageButton makeContentButton = createMakeContentButton(skin, playAccount, contentTitleField, contentQuality, contentTypeSelectBox);
+        buttonGroup.add(makeContentButton).size(BUTTON_SIZE).right();
+        buttonGroup.add(createDontMakeContentButton(skin)).size(BUTTON_SIZE).right();
         produceSettingsWidow.add(buttonGroup).colspan(2);
         final Table windowTable = new Table();
         windowTable.add(produceSettingsWidow).size(Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / 2.5f).center();
         windowTable.setVisible(false);
+        produceSettingsWidow.setDebug(true);
         return windowTable;
     }
 

@@ -66,7 +66,6 @@ final public class PlayAccount {
 
     public void addContentElement(final Content content) {
         accountContent.add(content);
-        System.out.println("content size: " + accountContent.size());
     }
 
     public TreeSet<Content> getContentElements() {
@@ -112,6 +111,7 @@ final public class PlayAccount {
         }
         return null;
     }
+
 
     private long rating;
     private long money;
