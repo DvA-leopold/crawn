@@ -1,63 +1,128 @@
 
 game_widget_skin.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-Circle-icons-videocameracompact.svg
-  rotate: false
-  xy: 1, 1
-  size: 600, 600
-  orig: 600, 600
-  offset: 0, 0
-  index: -1
-
-game_widget_skin2.png
-size: 1024,1024
+size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Camera-icon
   rotate: false
-  xy: 1, 1
+  xy: 1405, 1535
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-
-game_widget_skin3.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
+Circle-icons-videocameracompact.svg
+  rotate: false
+  xy: 803, 1447
+  size: 600, 600
+  orig: 600, 600
+  offset: 0, 0
+  index: -1
+Sound-Music-icon
+  rotate: false
+  xy: 1405, 1021
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+add_pressed
+  rotate: false
+  xy: 1919, 1919
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+add_unpressed
+  rotate: false
+  xy: 1919, 1789
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+avatar
+  rotate: false
+  xy: 1, 45
+  size: 398, 398
+  orig: 398, 398
+  offset: 0, 0
+  index: -1
 font-export
   rotate: false
-  xy: 515, 848
+  xy: 803, 745
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
-button
+not-ok
   rotate: false
-  xy: 515, 821
-  size: 33, 25
-  split: 1, 1, 1, 1
-  pad: 5, 5, 2, 2
-  orig: 33, 25
+  xy: 1, 1247
+  size: 800, 800
+  orig: 800, 800
   offset: 0, 0
   index: -1
-button-pressed
+ok-icons
   rotate: false
-  xy: 615, 921
-  size: 33, 25
-  split: 1, 0, 1, 1
-  pad: 5, 5, 2, 2
-  orig: 33, 25
+  xy: 1, 445
+  size: 800, 800
+  orig: 800, 800
+  offset: 0, 0
+  index: -1
+progress-bar-horizontal
+  rotate: false
+  xy: 401, 427
+  size: 29, 16
+  split: 6, 6, 0, 0
+  pad: 3, 3, 0, 0
+  orig: 29, 16
+  offset: 0, 0
+  index: -1
+progress-bar-knob-horizontal
+  rotate: false
+  xy: 1458, 1009
+  size: 1, 10
+  orig: 1, 10
+  offset: 0, 0
+  index: -1
+progress-bar-knob-vertical
+  rotate: false
+  xy: 1405, 985
+  size: 10, 1
+  orig: 10, 1
+  offset: 0, 0
+  index: -1
+progress-bar-vertical
+  rotate: false
+  xy: 1919, 1758
+  size: 16, 29
+  split: 0, 0, 7, 6
+  pad: 0, 0, 3, 3
+  orig: 16, 29
+  offset: 0, 0
+  index: -1
+slider-knob-horizontal
+  rotate: false
+  xy: 803, 723
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: -1
+slider-knob-pressed-horizontal
+  rotate: false
+  xy: 903, 823
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: -1
+square-button-clear
+  rotate: false
+  xy: 803, 845
+  size: 600, 600
+  orig: 600, 600
   offset: 0, 0
   index: -1
 tab
   rotate: false
-  xy: 1, 1
+  xy: 1405, 988
   size: 51, 31
   split: 1, 1, 4, 0
   pad: 5, 5, 3, 3
@@ -66,24 +131,10 @@ tab
   index: -1
 tab-pressed
   rotate: false
-  xy: 401, 401
+  xy: 1, 12
   size: 51, 31
   split: 1, 1, 4, 0
   pad: 5, 5, 3, 3
   orig: 51, 31
-  offset: 0, 0
-  index: -1
-Sound-Music-icon
-  rotate: false
-  xy: 1, 434
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-avatar
-  rotate: false
-  xy: 1, 34
-  size: 398, 398
-  orig: 398, 398
   offset: 0, 0
   index: -1

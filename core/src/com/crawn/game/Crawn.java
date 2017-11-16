@@ -19,7 +19,6 @@ final public class Crawn extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		stage = new Stage(new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
-		stage.setDebugAll(true);
 
 		ResourceManager.instance().loadFile("preload_skin/preload_skin.json", true);
 

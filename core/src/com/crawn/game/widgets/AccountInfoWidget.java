@@ -10,17 +10,17 @@ import com.crawn.game.model.PlayAccount;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.callbacks.RedrawMainInfo;
 
+import static com.crawn.game.utils.StaticUtils.AVATAR_SIZE;
+
 
 final class AccountInfoWidget extends Table implements RedrawMainInfo {
-    AccountInfoWidget(PlayAccount account) {
-        final float avatarSize = Gdx.graphics.getHeight() * 80 / Gdx.graphics.getWidth();
+    AccountInfoWidget(final PlayAccount account) {
+        left().setSize(Gdx.graphics.getWidth(), AVATAR_SIZE);
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
 
-        left();
-        setSize(Gdx.graphics.getWidth(), avatarSize);
         final Table addInfo = new Table().left();
 
-        addInfo.setSize(Gdx.graphics.getWidth(), avatarSize);
+        addInfo.setSize(Gdx.graphics.getWidth(), AVATAR_SIZE);
         addInfo.add(new Label("nick name: " + account.getNickName(), skin)).left().row();
         moneyLabel = new Label("money: " + account.getMoney(), skin);
         addInfo.add(moneyLabel).left().row();
@@ -28,9 +28,9 @@ final class AccountInfoWidget extends Table implements RedrawMainInfo {
         addInfo.add(ratingLabel).left();
 
         avatarButton = new ImageButton(skin, "avatar");
-        add(avatarButton).size(avatarSize);
+        add(avatarButton).size(AVATAR_SIZE);
         add(addInfo);
-        setPosition(0, Gdx.graphics.getHeight() - avatarSize);
+        setPosition(0, Gdx.graphics.getHeight() - AVATAR_SIZE);
         account.registerRedrawCallback(this);
     }
 

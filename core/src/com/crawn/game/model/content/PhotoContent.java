@@ -2,6 +2,7 @@ package com.crawn.game.model.content;
 
 import com.badlogic.gdx.math.MathUtils;
 
+
 final public class PhotoContent extends Content {
     public PhotoContent(final String title, final int factor) {
         super(title, factor);

@@ -6,7 +6,7 @@ import com.crawn.game.Crawn;
 import com.crawn.game.utils.MusicManager;
 
 
-public class MainMenuScreen implements Screen {
+final public class MainMenuScreen implements Screen {
     MainMenuScreen() { }
 
     @Override

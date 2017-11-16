@@ -49,22 +49,6 @@ public abstract class Content {
         views.increment(1);
     }
 
-    public String getlikesPrefix() {
-        return likes.getPrefix();
-    }
-
-    public String getdislikePrefix() {
-        return dislikes.getPrefix();
-    }
-
-    public String getViewsPrefix() {
-        return views.getPrefix();
-    }
-
-    public String getRepostsPrefix() {
-        return reposts.getPrefix();
-    }
-
     public String getTitle() {
         return title;
     }

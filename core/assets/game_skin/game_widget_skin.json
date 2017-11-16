@@ -1,18 +1,31 @@
 {
 com.badlogic.gdx.graphics.Color: {
-	RGBA_163_241_23_255: {
-		r: 0.08457315
-		g: 0.80333334
-		b: 0
+	RGBA_101_98_98_255: {
+		r: 0.39666668
+		g: 0.38476667
+		b: 0.38476667
 		a: 1
+	}
+	RGBA_163_241_23_255: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	square-button-clear_gray: {
+		name: square-button-clear
+		color: RGBA_101_98_98_255
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
-		imageUp: tab
-		imageDown: tab-pressed
-		imageChecked: tab-pressed
-		pressedOffsetY: 3
+		imageUp: square-button-clear
+		imageDown: square-button-clear_gray
+		imageChecked: square-button-clear_gray
+		pressedOffsetX: -3
+		pressedOffsetY: -3
 	}
 	video_content: {
 		imageUp: Circle-icons-videocameracompact.svg
@@ -32,15 +45,103 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	avatar: {
 		imageUp: avatar
 	}
+	produce: {
+		imageUp: add_unpressed
+		imageDown: add_pressed
+		pressedOffsetY: -5
+	}
+	make_content: {
+		imageUp: ok-icons
+		imageDown: ok-icons
+		pressedOffsetX: -5
+		pressedOffsetY: -5
+	}
+	dont_make_content: {
+		imageUp: not-ok
+		imageDown: not-ok
+		pressedOffsetX: -5
+		pressedOffsetY: -5
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: game_widget_skin
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: game_widget_skin
+		fontColorSelected: RGBA_163_241_23_255
+		fontColorUnselected: RGBA_163_241_23_255
+		selection: tab
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: progress-bar-horizontal
+		knob: progress-bar-knob-horizontal
+		knobBefore: progress-bar-knob-horizontal
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: tab
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: game_widget_skin
+		fontColor: RGBA_163_241_23_255
+		background: tab
+		scrollStyle: default
+		listStyle: default
+	}
+	content_type_select: {
+		font: game_widget_skin
+		fontColor: RGBA_163_241_23_255
+		background: tab
+		scrollStyle: default
+		listStyle: default
+	}
+	content_subtype_select: {
+		font: game_widget_skin
+		fontColor: RGBA_163_241_23_255
+		background: tab
+		scrollStyle: default
+		listStyle: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-vertical: {
+		knobDown: slider-knob-pressed-horizontal
+		background: progress-bar-vertical
+		knob: slider-knob-horizontal
+		knobBefore: progress-bar-knob-vertical
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+	default-horizontal: {
+		handle: progress-bar-vertical
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	content_title_field: {
+		font: game_widget_skin
+		fontColor: RGBA_163_241_23_255
+		background: tab
+		cursor: progress-bar-vertical
+		selection: tab-pressed
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	produce_settings_window: {
+		background: tab
+		titleFont: game_widget_skin
 	}
 }
 }

@@ -7,9 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.crawn.game.model.PlayAccount;
 import com.crawn.game.model.content.Content;
+import com.crawn.game.model.generators.AccountGenerator;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 
+import java.util.TreeSet;
 import java.util.Vector;
+
+import static com.crawn.game.utils.StaticUtils.MENU_BUTTON_HEIGHT;
 
 
 public final class GameWidgetGroup extends Table {
@@ -17,23 +21,16 @@ public final class GameWidgetGroup extends Table {
         setFillParent(true);
         top().left();
 
-        myAccountInfoWidget = new AccountInfoWidget(account);
-        settingsButtonTable = initButtonsTable();
         accountsContentPane = initContentScrollPane(account);
+        accountsPane = initAccountsScrollPane(AccountGenerator.generateAccounts(15));
+        homeWidget = new HomeWidget(account);
 
-        // FIXME tests only
-        Vector<PlayAccount> accounts = new Vector<>();
-        for (int i = 0; i < 10; ++i) {
-            accounts.add(new PlayAccount("test" + i, 1233 * i, 444 * i));
-        }
-        accountsPane = initAccountsScrollPane(accounts);
-        // FIXME tests only
-
-        add(myAccountInfoWidget).top().left().row();
-        add(settingsButtonTable).row();
+        add(new AccountInfoWidget(account)).top().left().row();
+        add(initButtonsTable()).row();
         final Stack paneStack = new Stack();
         paneStack.add(accountsContentPane);
         paneStack.add(accountsPane);
+        paneStack.add(homeWidget);
         add(paneStack).width(Gdx.graphics.getWidth());
     }
 
@@ -45,7 +42,8 @@ public final class GameWidgetGroup extends Table {
 
         for (int i = 0; i < 3; ++i) {
             final ImageButton menuButton = new ImageButton(skin);
-            menuButtonsTable.add(menuButton).size(Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 10);
+            // FIXME button size is proportional, image height and width wont change independently
+            menuButtonsTable.add(menuButton).size(Gdx.graphics.getWidth() / 3, MENU_BUTTON_HEIGHT);
             settingsButtonGroup.add(menuButton);
         }
         initButtonsListeners(settingsButtonGroup.getButtons());
@@ -53,12 +51,11 @@ public final class GameWidgetGroup extends Table {
         return menuButtonsTable;
     }
 
-    private ScrollPane initContentScrollPane(PlayAccount account) {
+    private ScrollPane initContentScrollPane(final PlayAccount account) {
         final VerticalGroup contentGroup = new VerticalGroup().columnLeft().left();
-        final Vector<Content> contentElements = account.getContentElements();
-        for (int i = 0; i < contentElements.size(); ++i) {
-            Content contentElement = contentElements.elementAt(i);
-            ContentElementWidget contentWidget = new ContentElementWidget(contentElement);
+        final TreeSet<Content> contentElements = account.getContentElements();
+        for (Content contentElement: contentElements) {
+            final ContentElementWidget contentWidget = new ContentElementWidget(contentElement);
             contentElement.registerRedrawCallback(contentWidget);
             contentGroup.addActor(contentWidget);
         }
@@ -70,7 +67,7 @@ public final class GameWidgetGroup extends Table {
         for (PlayAccount account: userAccounts) {
             accountsGroup.addActor(new AccountInfoWidget(account));
         }
-        ScrollPane accountsScrollPane = new ScrollPane(accountsGroup);
+        final ScrollPane accountsScrollPane = new ScrollPane(accountsGroup);
         accountsScrollPane.setVisible(false);
         return accountsScrollPane;
     }
@@ -80,15 +77,13 @@ public final class GameWidgetGroup extends Table {
         buttons.get(0).addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("before");
                 if (!buttons.get(0).isChecked()) {
                     buttons.get(0).setChecked(true);
                     return;
                 }
-                System.out.println("after");
-
-                accountsPane.setVisible(false);
                 accountsContentPane.setVisible(true);
+                accountsPane.setVisible(false);
+                homeWidget.setVisible(false);
             }
         });
 
@@ -99,30 +94,29 @@ public final class GameWidgetGroup extends Table {
                     buttons.get(1).setChecked(true);
                     return;
                 }
-                accountsPane.setVisible(true);
                 accountsContentPane.setVisible(false);
+                accountsPane.setVisible(true);
+                homeWidget.setVisible(false);
             }
         });
-//
-//
-//        buttons.get(2).addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                if (buttons.get(2).isChecked()) {
-//                    return;
-//                }
-//                buttons.get(2).setChecked(true);
-//                myAccountInfoWidget.setVisible(true);
-//                accountsPane.setVisible(false);
-//            }
-//        });
+
+        buttons.get(2).addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (!buttons.get(2).isChecked()) {
+                    buttons.get(2).setChecked(true);
+                    return;
+                }
+                accountsContentPane.setVisible(false);
+                accountsPane.setVisible(false);
+                homeWidget.setVisible(true);
+            }
+        });
     }
 
 
-    final private AccountInfoWidget myAccountInfoWidget;
-    final private Table settingsButtonTable;
-
+    final private ScrollPane accountsContentPane;
     final private ScrollPane accountsPane;
-    private ScrollPane accountsContentPane;
+    final private HomeWidget homeWidget;
 
 }

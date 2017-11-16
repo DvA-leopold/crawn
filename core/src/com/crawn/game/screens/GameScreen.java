@@ -17,18 +17,16 @@ import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.GameWidgetGroup;
 
 
-public class GameScreen implements Screen {
+final public class GameScreen implements Screen {
     GameScreen() {
         batch = ((Crawn) Gdx.app.getApplicationListener()).getMainBatch();
         background = new Sprite((Texture) ResourceManager.instance().get("textures/bg.jpg"));
         account = new PlayAccount("awesome acc", 0 , 0);
-
-        for (int i = 0; i < 15; i++) {
-            account.addContentElement(new VideoContent("my awesome vid", 5));
-            account.addContentElement(new PhotoContent("my awesome photo", 19));
-            account.addContentElement(new MusicContent("awesome sound", 33));
-            account.addContentElement(new PhotoContent("new photo", 1));
-            account.addContentElement(new MusicContent("porn vids", 12));
+        for (int i = 0; i < 14; ++i) {
+            System.out.println("add content");
+            account.addContentElement(new VideoContent("dd", 331));
+            account.addContentElement(new PhotoContent("qweasd ", 312));
+            account.addContentElement(new MusicContent("eminem", 1333));
         }
     }
 
@@ -46,9 +44,7 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) { }
 
     @Override
     public void pause() {

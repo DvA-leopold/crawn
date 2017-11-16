@@ -11,7 +11,7 @@ import com.crawn.game.utils.MusicManager;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 
 
-public class LoadingScreen implements Screen {
+final public class LoadingScreen implements Screen {
     @Override
     public void show() {
         batch = ((Crawn) Gdx.app.getApplicationListener()).getMainBatch();
