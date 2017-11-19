@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 
 
-public class FreeTypeFontLoader extends FreetypeFontLoader {
+final public class FreeTypeFontLoader extends FreetypeFontLoader {
     public FreeTypeFontLoader() {
         super(new InternalFileHandleResolver());
     }

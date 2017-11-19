@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Json;
 import com.crawn.game.model.PlayAccount;
 
 
-public class PlayAccountLoader extends SynchronousAssetLoader<PlayAccount, PlayAccountLoader.PlayAccountParameter> {
+final public class PlayAccountLoader extends SynchronousAssetLoader<PlayAccount, PlayAccountLoader.PlayAccountParameter> {
     public PlayAccountLoader() {
         super(new InternalFileHandleResolver());
     }

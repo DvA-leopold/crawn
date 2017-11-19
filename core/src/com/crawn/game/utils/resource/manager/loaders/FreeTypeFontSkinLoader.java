@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import java.io.File;
 
 
-public class FreeTypeFontSkinLoader extends SkinLoader {
+final public class FreeTypeFontSkinLoader extends SkinLoader {
     public FreeTypeFontSkinLoader() {
         super(new InternalFileHandleResolver());
     }
