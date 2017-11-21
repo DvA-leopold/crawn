@@ -97,13 +97,12 @@ final public class HomeWidget extends Container<Stack> implements Observer {
     }
 
     private VerticalGroup initProducingVerticalGroup() {
-        final VerticalGroup producingContent = new VerticalGroup().columnLeft().left();
+        final VerticalGroup producingContent = new VerticalGroup().columnLeft().left().reverse();
         if (producingContentContainer != null) {
             for (ContentElementWidget contentWidget: producingContentContainer.values()) {
                 producingContent.addActor(contentWidget);
             }
         }
-        producingContent.reverse(true);
         return producingContent;
     }
 

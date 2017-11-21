@@ -15,6 +15,8 @@ public class ContentScrollPane extends ScrollPane implements Observer {
 
     @Override
     public void update(Observable observable, Object finishedContent) {
-        ((VerticalGroup) getWidget()).addActor(new ContentElementWidget((Content) finishedContent));
+        final ContentElementWidget contentWidget = new ContentElementWidget((Content) finishedContent);
+        ((Content) finishedContent).registerRedrawCallback(contentWidget);
+        ((VerticalGroup) getWidget()).addActor(contentWidget);
     }
 }

@@ -3,6 +3,7 @@ package com.crawn.game.model.content;
 
 import com.crawn.game.widgets.callbacks.RedrawContent;
 
+
 public abstract class Content {
     Content(final String title, final int growFactor) {
         this.title = title;

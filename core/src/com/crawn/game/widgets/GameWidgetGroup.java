@@ -55,7 +55,7 @@ final public class GameWidgetGroup extends Table {
     }
 
     private ContentScrollPane initContentScrollPane(final PlayAccount account) {
-        final VerticalGroup contentGroup = new VerticalGroup().columnLeft().left();
+        final VerticalGroup contentGroup = new VerticalGroup().columnLeft().left().reverse();
         final TreeSet<Content> contentElements = account.getContentElements();
         for (Content contentElement: contentElements) {
             final ContentElementWidget contentWidget = new ContentElementWidget(contentElement);
