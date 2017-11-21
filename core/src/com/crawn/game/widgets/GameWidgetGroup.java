@@ -21,14 +21,17 @@ final public class GameWidgetGroup extends Table {
         setFillParent(true);
         top().left();
 
-        accountsContentPane = initContentScrollPane(account);
+        accountContentPane = initContentScrollPane(account);
         accountsPane = initAccountsScrollPane(AccountGenerator.generateAccounts(15));
         homeWidget = new HomeWidget(account);
+
+        account.addObserver(homeWidget);
+        account.addObserver(accountContentPane);
 
         add(new AccountInfoWidget(account)).top().left().row();
         add(initButtonsTable()).row();
         final Stack paneStack = new Stack();
-        paneStack.add(accountsContentPane);
+        paneStack.add(accountContentPane);
         paneStack.add(accountsPane);
         paneStack.add(homeWidget);
         add(paneStack).width(Gdx.graphics.getWidth());
@@ -51,7 +54,7 @@ final public class GameWidgetGroup extends Table {
         return menuButtonsTable;
     }
 
-    private ScrollPane initContentScrollPane(final PlayAccount account) {
+    private ContentScrollPane initContentScrollPane(final PlayAccount account) {
         final VerticalGroup contentGroup = new VerticalGroup().columnLeft().left();
         final TreeSet<Content> contentElements = account.getContentElements();
         for (Content contentElement: contentElements) {
@@ -59,7 +62,7 @@ final public class GameWidgetGroup extends Table {
             contentElement.registerRedrawCallback(contentWidget);
             contentGroup.addActor(contentWidget);
         }
-        return new ScrollPane(contentGroup);
+        return new ContentScrollPane(contentGroup);
     }
 
     private ScrollPane initAccountsScrollPane(Vector<PlayAccount> userAccounts) {
@@ -81,7 +84,7 @@ final public class GameWidgetGroup extends Table {
                     buttons.get(0).setChecked(true);
                     return;
                 }
-                accountsContentPane.setVisible(true);
+                accountContentPane.setVisible(true);
                 accountsPane.setVisible(false);
                 homeWidget.setVisible(false);
             }
@@ -94,7 +97,7 @@ final public class GameWidgetGroup extends Table {
                     buttons.get(1).setChecked(true);
                     return;
                 }
-                accountsContentPane.setVisible(false);
+                accountContentPane.setVisible(false);
                 accountsPane.setVisible(true);
                 homeWidget.setVisible(false);
             }
@@ -107,7 +110,7 @@ final public class GameWidgetGroup extends Table {
                     buttons.get(2).setChecked(true);
                     return;
                 }
-                accountsContentPane.setVisible(false);
+                accountContentPane.setVisible(false);
                 accountsPane.setVisible(false);
                 homeWidget.setVisible(true);
             }
@@ -115,7 +118,7 @@ final public class GameWidgetGroup extends Table {
     }
 
 
-    final private ScrollPane accountsContentPane;
+    final private ContentScrollPane accountContentPane;
     final private ScrollPane accountsPane;
     final private HomeWidget homeWidget;
 }

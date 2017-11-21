@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.crawn.game.model.PlayAccount;
 import com.crawn.game.model.content.Content;
 import com.crawn.game.model.content.ContentTypeConverter;
+import com.crawn.game.utils.components.Observable;
+import com.crawn.game.utils.components.Observer;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 
 import java.util.HashMap;
@@ -18,7 +20,7 @@ import static com.crawn.game.model.content.ContentTypeConverter.stringToType;
 import static com.crawn.game.utils.StaticUtils.*;
 
 
-final public class HomeWidget extends Container<Stack> {
+final public class HomeWidget extends Container<Stack> implements Observer {
     HomeWidget(final PlayAccount playAccount) {
         setVisible(false);
         this.producingContentContainer = new HashMap<>();
@@ -42,15 +44,11 @@ final public class HomeWidget extends Container<Stack> {
         }
     }
 
-    public void removeProducingContent(final Content content) {
-        final ContentElementWidget contentToRemove = producingContentContainer.remove(content);
-        producingContentPane.removeActor(contentToRemove);
-    }
-
-    public void insertProducingContent(final Content content) {
-        final ContentElementWidget contentToAdd = new ContentElementWidget(content);
-        producingContentContainer.put(content, contentToAdd);
-        producingContentPane.addActor(contentToAdd);
+    @Override
+    public void update(Observable observable, Object finishedContent) {
+        if (finishedContent instanceof Content) {
+            producingContentPane.removeActor(producingContentContainer.remove(finishedContent));
+        }
     }
 
     private Container<Stack> initProduceStatusMenu() {
@@ -75,15 +73,15 @@ final public class HomeWidget extends Container<Stack> {
 
     private Container<Window> initProduceSettingsWindow(final PlayAccount playAccount) {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
-        final TextField contentTitleField = new TextField("title name", skin, "content_title_field");
-        final SelectBox<String> contentTypeSelectBox = initContentTypeSelectBox(skin);
-        final Slider contentQuality = initContentQualitySlider(skin);
 
         final VerticalGroup settingsGroup = new VerticalGroup().columnLeft();
+        final TextField contentTitleField = new TextField("title name", skin, "content_title_field");
         settingsGroup.addActor(contentTitleField);
+        final SelectBox<String> contentTypeSelectBox = initContentTypeSelectBox(skin);
         settingsGroup.addActor(contentTypeSelectBox);
 
         final Window produceSettingsWidow = new Window("produce settings", skin, "produce_settings_window");
+        final Slider contentQuality = initContentQualitySlider(skin);
         produceSettingsWidow.setModal(true);
         produceSettingsWidow.setMovable(false);
         produceSettingsWidow.add(contentQuality);
@@ -109,8 +107,8 @@ final public class HomeWidget extends Container<Stack> {
     }
 
     private ImageButton createDiscardContentButton(final Skin skin) {
-        final ImageButton dontMakeContentButton = new ImageButton(skin, "dont_make_content");
-        dontMakeContentButton.addListener(new ClickListener() {
+        final ImageButton discardContentButton = new ImageButton(skin, "dont_make_content");
+        discardContentButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 produceStatisticsMenu.setVisible(true);
@@ -118,7 +116,7 @@ final public class HomeWidget extends Container<Stack> {
             }
         });
 
-        return dontMakeContentButton;
+        return discardContentButton;
     }
 
     private ImageButton createApproveContentButton(final Skin skin,
@@ -134,7 +132,12 @@ final public class HomeWidget extends Container<Stack> {
                 produceSettingsWidow.setVisible(false);
                 try {
                     final ContentTypeConverter.ContentType selectedType = stringToType(contentTypeSelectBox.getSelected());
-                    playAccount.produceContent(HomeWidget.this, contentTitleField.getText(), selectedType, (int) contentQuality.getValue());
+                    final Content content = playAccount.produceContent(contentTitleField.getText(), selectedType, (int) contentQuality.getValue());
+                    if (content != null) {
+                        final ContentElementWidget contentToAdd = new ContentElementWidget(content);
+                        producingContentContainer.put(content, contentToAdd);
+                        producingContentPane.addActor(contentToAdd);
+                    }
                 } catch (final NoSuchElementException what) {
                     System.err.println(what.toString());
                 }
@@ -173,7 +176,7 @@ final public class HomeWidget extends Container<Stack> {
     final private VerticalGroup producingContentPane;
 
     final private HashMap<Content, ContentElementWidget> producingContentContainer;
-
     final private Container<Stack> produceStatisticsMenu;
+
     final private Container<Window> produceSettingsWidow;
 }

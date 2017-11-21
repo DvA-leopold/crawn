@@ -2,14 +2,17 @@ package com.crawn.game.model;
 
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.model.content.*;
+import com.crawn.game.utils.components.Observable;
 import com.crawn.game.widgets.callbacks.RedrawMainInfo;
-import com.crawn.game.widgets.HomeWidget;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.TreeSet;
 
 
-final public class PlayAccount {
+final public class PlayAccount extends Observable {
     public PlayAccount(final String accountName, long money, long rating) {
+        super();
         this.nickName = accountName;
         this.money = money;
         this.rating = rating;
@@ -25,44 +28,37 @@ final public class PlayAccount {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                for (Content content: accountContent) {
-//                    content.recalculateStatistic();
+                for (Content content : accountContent) {
+                    content.recalculateStatistic();
+                    callback.redraw(PlayAccount.this.money, PlayAccount.this.rating);
                 }
             }
         }, 15, 15, Integer.MAX_VALUE);
-
-        Timer.instance().scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                callback.redraw(PlayAccount.this.money, PlayAccount.this.rating);
-            }
-        }, 10, 10, 10);
     }
 
-    public void produceContent(final HomeWidget updateWidget,
-                               final String title,
-                               final ContentTypeConverter.ContentType contentType,
-                               int quality) {
+    public Content produceContent(final String title,
+                                  final ContentTypeConverter.ContentType contentType,
+                                  int quality) {
         int contentPrice = getContentPrice(contentType, quality);
         if (contentPrice > money) {
-            return;
+            return null;
         }
 
         final Content content = createContent(title, contentType);
         producingContent.add(content);
         money -= contentPrice;
-        updateWidget.insertProducingContent(content);
 
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 accountContent.add(content);
                 producingContent.remove(content);
-                updateWidget.removeProducingContent(content);
+                notifyObservers(content);
             }
         }, getContentProduceTime(contentType, quality), 0, 0);
-    }
 
+        return content;
+    }
 
     public void addContentElement(final Content content) {
         accountContent.add(content);

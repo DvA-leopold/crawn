@@ -5,14 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.Crawn;
 import com.crawn.game.model.PlayAccount;
-import com.crawn.game.model.content.MusicContent;
-import com.crawn.game.model.content.PhotoContent;
-import com.crawn.game.model.content.VideoContent;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.GameWidgetGroup;
 
