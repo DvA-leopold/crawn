@@ -26,7 +26,7 @@ final public class PlayAccount {
             @Override
             public void run() {
                 for (Content content: accountContent) {
-                    content.recalculateStatistic();
+//                    content.recalculateStatistic();
                 }
             }
         }, 15, 15, Integer.MAX_VALUE);
@@ -56,9 +56,9 @@ final public class PlayAccount {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                accountContent.add(content);
-                producingContent.remove(content);
-                updateWidget.removeProducingContent(content);
+//                accountContent.add(content);
+//                producingContent.remove(content);
+//                updateWidget.removeProducingContent(content);
             }
         }, getContentProduceTime(contentType, quality), 0, 0);
     }
@@ -97,7 +97,7 @@ final public class PlayAccount {
     }
 
     private int getContentProduceTime(ContentTypeConverter.ContentType contentType, int quality) {
-        return 0;
+        return 15;
     }
 
     private Content createContent(String title, ContentTypeConverter.ContentType type) {

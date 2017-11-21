@@ -18,7 +18,7 @@ import static com.crawn.game.model.content.ContentTypeConverter.stringToType;
 import static com.crawn.game.utils.StaticUtils.*;
 
 
-final public class HomeWidget extends Table {
+final public class HomeWidget extends Container<Stack> {
     HomeWidget(final PlayAccount playAccount) {
         setVisible(false);
         this.producingContentContainer = new HashMap<>();
@@ -27,11 +27,11 @@ final public class HomeWidget extends Table {
         }
 
         producingContentPane = initProducingVerticalGroup();
+        producingContentPane.setDebug(true);
         produceStatisticsMenu = initProduceStatusMenu();
-        produceSettingsWidowTable = initProduceSettingsWindow(playAccount);
+        produceSettingsWidowContainer = initProduceSettingsWindow(playAccount);
 
-        final Stack widgetStack = new Stack(produceStatisticsMenu, produceSettingsWidowTable);
-        add(widgetStack).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - AVATAR_SIZE - MENU_BUTTON_HEIGHT);
+        setActor(new Stack(produceStatisticsMenu, produceSettingsWidowContainer));
     }
 
 
@@ -62,20 +62,18 @@ final public class HomeWidget extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 produceStatisticsMenu.setVisible(false);
-                produceSettingsWidowTable.setVisible(true);
+                produceSettingsWidowContainer.setVisible(true);
             }
         });
 
         final Stack statusMenuStack = new Stack();
-        statusMenuStack.add(producingContentPane);
-        statusMenuStack.add(produceButton.pad(BUTTON_PADDING));
-
-        produceStatisticsMenu.add(statusMenuStack).expand().right().bottom();
-        produceStatisticsMenu.setDebug(true);
+        statusMenuStack.add(new ScrollPane(producingContentPane));
+        statusMenuStack.add(new Container<>(produceButton).bottom().right().pad(BUTTON_PADDING));
+        produceStatisticsMenu.add(statusMenuStack).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - MENU_BUTTON_HEIGHT - AVATAR_SIZE).left().top();
         return produceStatisticsMenu;
     }
 
-    private Table initProduceSettingsWindow(final PlayAccount playAccount) {
+    private Container<Window> initProduceSettingsWindow(final PlayAccount playAccount) {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
         final TextField contentTitleField = new TextField("title name", skin, "content_title_field");
         final SelectBox<String> contentTypeSelectBox = initContentTypeSelectBox(skin);
@@ -94,16 +92,14 @@ final public class HomeWidget extends Table {
         final ImageButton approveContentButton = createApproveContentButton(skin, playAccount, contentTitleField, contentQuality, contentTypeSelectBox);
         buttonGroup.add(approveContentButton).size(BUTTON_SIZE).right();
         buttonGroup.add(createDiscardContentButton(skin)).size(BUTTON_SIZE).right();
-        produceSettingsWidow.add(buttonGroup).colspan(2);
-        final Table windowTable = new Table();
-        windowTable.add(produceSettingsWidow).size(Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / 2.5f).center();
-        windowTable.setVisible(false);
-        produceSettingsWidow.setDebug(true);
-        return windowTable;
+        produceSettingsWidow.add(buttonGroup).bottom().colspan(2);
+        final Container<Window> windowContainer = new Container<>(produceSettingsWidow).center().size(Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / 2.5f);
+        windowContainer.setVisible(false);
+        return windowContainer;
     }
 
     private VerticalGroup initProducingVerticalGroup() {
-        final VerticalGroup producingContent = new VerticalGroup();
+        final VerticalGroup producingContent = new VerticalGroup().columnLeft().left();
         if (producingContentContainer != null) {
             for (ContentElementWidget contentWidget: producingContentContainer.values()) {
                 producingContent.addActor(contentWidget);
@@ -118,7 +114,7 @@ final public class HomeWidget extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 produceStatisticsMenu.setVisible(true);
-                produceSettingsWidowTable.setVisible(false);
+                produceSettingsWidowContainer.setVisible(false);
             }
         });
 
@@ -135,7 +131,7 @@ final public class HomeWidget extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 produceStatisticsMenu.setVisible(true);
-                produceSettingsWidowTable.setVisible(false);
+                produceSettingsWidowContainer.setVisible(false);
                 try {
                     final ContentTypeConverter.ContentType selectedType = stringToType(contentTypeSelectBox.getSelected());
                     playAccount.produceContent(HomeWidget.this, contentTitleField.getText(), selectedType, (int) contentQuality.getValue());
@@ -179,5 +175,5 @@ final public class HomeWidget extends Table {
     final private HashMap<Content, ContentElementWidget> producingContentContainer;
 
     final private Table produceStatisticsMenu;
-    final private Table produceSettingsWidowTable;
+    final private Container<Window> produceSettingsWidowContainer;
 }

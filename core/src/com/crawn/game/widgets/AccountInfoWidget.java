@@ -19,7 +19,6 @@ final class AccountInfoWidget extends Table implements RedrawMainInfo {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
 
         final Table addInfo = new Table().left();
-
         addInfo.setSize(Gdx.graphics.getWidth(), AVATAR_SIZE);
         addInfo.add(new Label("nick name: " + account.getNickName(), skin)).left().row();
         moneyLabel = new Label("money: " + account.getMoney(), skin);
