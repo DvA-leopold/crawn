@@ -56,9 +56,9 @@ final public class PlayAccount {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-//                accountContent.add(content);
-//                producingContent.remove(content);
-//                updateWidget.removeProducingContent(content);
+                accountContent.add(content);
+                producingContent.remove(content);
+                updateWidget.removeProducingContent(content);
             }
         }, getContentProduceTime(contentType, quality), 0, 0);
     }

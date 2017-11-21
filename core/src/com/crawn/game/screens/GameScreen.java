@@ -22,11 +22,6 @@ final public class GameScreen implements Screen {
         batch = ((Crawn) Gdx.app.getApplicationListener()).getMainBatch();
         background = new Sprite((Texture) ResourceManager.instance().get("textures/bg.jpg"));
         account = new PlayAccount("awesome acc", 0 , 0);
-        for (int i = 0; i < 14; ++i) {
-            account.addContentElement(new VideoContent("dd", 331));
-            account.addContentElement(new PhotoContent("qweasd ", 312));
-            account.addContentElement(new MusicContent("eminem", 1333));
-        }
     }
 
     @Override

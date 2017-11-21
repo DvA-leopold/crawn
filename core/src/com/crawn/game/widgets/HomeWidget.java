@@ -27,7 +27,6 @@ final public class HomeWidget extends Container<Stack> {
         }
 
         producingContentPane = initProducingVerticalGroup();
-        producingContentPane.setDebug(true);
         produceStatisticsMenu = initProduceStatusMenu();
         produceSettingsWidow = initProduceSettingsWindow(playAccount);
 

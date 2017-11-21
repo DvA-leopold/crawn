@@ -118,5 +118,4 @@ final public class GameWidgetGroup extends Table {
     final private ScrollPane accountsContentPane;
     final private ScrollPane accountsPane;
     final private HomeWidget homeWidget;
-
 }
