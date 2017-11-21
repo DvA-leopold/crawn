@@ -29,9 +29,9 @@ final public class HomeWidget extends Container<Stack> {
         producingContentPane = initProducingVerticalGroup();
         producingContentPane.setDebug(true);
         produceStatisticsMenu = initProduceStatusMenu();
-        produceSettingsWidowContainer = initProduceSettingsWindow(playAccount);
+        produceSettingsWidow = initProduceSettingsWindow(playAccount);
 
-        setActor(new Stack(produceStatisticsMenu, produceSettingsWidowContainer));
+        setActor(new Stack(produceStatisticsMenu, produceSettingsWidow));
     }
 
 
@@ -54,22 +54,23 @@ final public class HomeWidget extends Container<Stack> {
         producingContentPane.addActor(contentToAdd);
     }
 
-    private Table initProduceStatusMenu() {
+    private Container<Stack> initProduceStatusMenu() {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
-        final Table produceStatisticsMenu = new Table();
+        final Container<Stack> produceStatisticsMenu = new Container<>();
         final ImageButton produceButton = new ImageButton(skin, "produce");
         produceButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 produceStatisticsMenu.setVisible(false);
-                produceSettingsWidowContainer.setVisible(true);
+                produceSettingsWidow.setVisible(true);
             }
         });
 
         final Stack statusMenuStack = new Stack();
         statusMenuStack.add(new ScrollPane(producingContentPane));
         statusMenuStack.add(new Container<>(produceButton).bottom().right().pad(BUTTON_PADDING));
-        produceStatisticsMenu.add(statusMenuStack).size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - MENU_BUTTON_HEIGHT - AVATAR_SIZE).left().top();
+        produceStatisticsMenu.size(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - MENU_BUTTON_HEIGHT - AVATAR_SIZE).left().top();
+        produceStatisticsMenu.setActor(statusMenuStack);
         return produceStatisticsMenu;
     }
 
@@ -93,8 +94,8 @@ final public class HomeWidget extends Container<Stack> {
         buttonGroup.add(approveContentButton).size(BUTTON_SIZE).right();
         buttonGroup.add(createDiscardContentButton(skin)).size(BUTTON_SIZE).right();
         produceSettingsWidow.add(buttonGroup).bottom().colspan(2);
-        final Container<Window> windowContainer = new Container<>(produceSettingsWidow).center().size(Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / 2.5f);
-        windowContainer.setVisible(false);
+        final Container<Window> windowContainer = new Container<>(produceSettingsWidow);
+        windowContainer.size(Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / 2.5f).center().setVisible(false);
         return windowContainer;
     }
 
@@ -114,7 +115,7 @@ final public class HomeWidget extends Container<Stack> {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 produceStatisticsMenu.setVisible(true);
-                produceSettingsWidowContainer.setVisible(false);
+                produceSettingsWidow.setVisible(false);
             }
         });
 
@@ -131,7 +132,7 @@ final public class HomeWidget extends Container<Stack> {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 produceStatisticsMenu.setVisible(true);
-                produceSettingsWidowContainer.setVisible(false);
+                produceSettingsWidow.setVisible(false);
                 try {
                     final ContentTypeConverter.ContentType selectedType = stringToType(contentTypeSelectBox.getSelected());
                     playAccount.produceContent(HomeWidget.this, contentTitleField.getText(), selectedType, (int) contentQuality.getValue());
@@ -174,6 +175,6 @@ final public class HomeWidget extends Container<Stack> {
 
     final private HashMap<Content, ContentElementWidget> producingContentContainer;
 
-    final private Table produceStatisticsMenu;
-    final private Container<Window> produceSettingsWidowContainer;
+    final private Container<Stack> produceStatisticsMenu;
+    final private Container<Window> produceSettingsWidow;
 }
