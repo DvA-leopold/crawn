@@ -103,6 +103,7 @@ final public class HomeWidget extends Container<Stack> implements Observer {
                 producingContent.addActor(contentWidget);
             }
         }
+        producingContent.reverse(true);
         return producingContent;
     }
 
