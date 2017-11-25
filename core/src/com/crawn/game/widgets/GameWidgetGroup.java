@@ -59,13 +59,13 @@ final public class GameWidgetGroup extends Table {
         final TreeSet<Content> contentElements = account.getContentElements();
         for (Content contentElement: contentElements) {
             final ContentElementWidget contentWidget = new ContentElementWidget(contentElement);
-            contentElement.registerRedrawCallback(contentWidget);
+            contentElement.addObserver(contentWidget);
             contentGroup.addActor(contentWidget);
         }
         return new ContentScrollPane(contentGroup);
     }
 
-    private ScrollPane initAccountsScrollPane(Vector<PlayAccount> userAccounts) {
+    private ScrollPane initAccountsScrollPane(final Vector<PlayAccount> userAccounts) {
         final VerticalGroup accountsGroup = new VerticalGroup().columnLeft().left();
         for (PlayAccount account: userAccounts) {
             accountsGroup.addActor(new AccountInfoWidget(account));

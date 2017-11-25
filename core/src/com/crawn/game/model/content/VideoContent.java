@@ -2,9 +2,10 @@ package com.crawn.game.model.content;
 
 import com.badlogic.gdx.math.MathUtils;
 
+
 final public class VideoContent extends Content {
-    public VideoContent(final String title, int growFactor) {
-        super(title, growFactor);
+    public VideoContent(final String title, int growFactor, int timeToProduce) {
+        super(title, growFactor, timeToProduce);
     }
 
     @Override
@@ -14,7 +15,7 @@ final public class VideoContent extends Content {
         views.increment(MathUtils.random(0, growFactor));
         reposts.increment(MathUtils.random(0, growFactor));
 
-        callback.redraw(likes.getValue(), dislikes.getValue(), views.getValue(), reposts.getValue());
+        notifyObservers(null);
     }
 
     @Override

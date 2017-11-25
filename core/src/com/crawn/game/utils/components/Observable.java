@@ -1,10 +1,11 @@
 package com.crawn.game.utils.components;
 
-import java.util.HashSet;
+import java.util.Vector;
+
 
 public class Observable {
     public Observable() {
-        observers = new HashSet<>();
+        observers = new Vector<>();
     }
 
     public void addObserver(Observer observer) {
@@ -16,12 +17,12 @@ public class Observable {
     }
 
 
-    protected void notifyObservers(Object object) {
+    public void notifyObservers(Object object) {
         for (Observer obs: observers) {
-            obs.update(null, object);
+            obs.update(this, object);
         }
     }
 
 
-    final private HashSet<Observer> observers;
+    final private Vector<Observer> observers;
 }

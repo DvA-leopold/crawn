@@ -3,9 +3,7 @@ package com.crawn.game.model;
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.model.content.*;
 import com.crawn.game.utils.components.Observable;
-import com.crawn.game.widgets.callbacks.RedrawMainInfo;
 
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -16,24 +14,25 @@ final public class PlayAccount extends Observable {
         this.nickName = accountName;
         this.money = money;
         this.rating = rating;
-
-        this.accountContent = new TreeSet<>(new Comparator<Content>() {
-            @Override
-            public int compare(Content content1, Content content2) {
-                return Long.compare(content1.getViews(false), content2.getViews(false)) > 0 ? 1 : -1;
-            }
-        });
+        this.subscribers = 0;
         this.producingContent = new HashSet<>();
+
+        this.accountContent = new TreeSet<>((content1, content2)
+                -> Long.compare(content1.getViews(false), content2.getViews(false)) > 0 ? 1 : -1);
 
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                for (Content content : accountContent) {
+                for (Content content: producingContent) {
+                    content.notifyObservers(content.getFinishPercent());
+                    content.update();
+                }
+
+                for (Content content: accountContent) {
                     content.recalculateStatistic();
-                    callback.redraw(PlayAccount.this.money, PlayAccount.this.rating);
                 }
             }
-        }, 15, 15, Integer.MAX_VALUE);
+        }, 1, 1, Integer.MAX_VALUE);
     }
 
     public Content produceContent(final String title,
@@ -44,19 +43,20 @@ final public class PlayAccount extends Observable {
             return null;
         }
 
-        final Content content = createContent(title, contentType);
+        final int produceTime = getContentProduceTime(contentType, quality);
+        final Content content = createContent(title, contentType, produceTime);
         producingContent.add(content);
-        money -= contentPrice;
-
-        Timer.instance().scheduleTask(new Timer.Task() {
+        assert content != null;
+        content.initTask(new Timer.Task() {
             @Override
             public void run() {
                 accountContent.add(content);
                 producingContent.remove(content);
                 notifyObservers(content);
             }
-        }, getContentProduceTime(contentType, quality), 0, 0);
-
+        });
+        money -= contentPrice;
+        notifyObservers(null);
         return content;
     }
 
@@ -84,8 +84,16 @@ final public class PlayAccount extends Observable {
         return rating;
     }
 
-    public void registerRedrawCallback(RedrawMainInfo callback) {
-        this.callback = callback;
+    public long getSubscribers() {
+        return subscribers;
+    }
+
+    public void changeSubscribers(int subscribers) {
+        if (this.subscribers + subscribers < 0) {
+            this.subscribers = 0;
+        } else {
+            this.subscribers += subscribers;
+        }
     }
 
     private int getContentPrice(ContentTypeConverter.ContentType contentType, int quality) {
@@ -96,25 +104,24 @@ final public class PlayAccount extends Observable {
         return 15;
     }
 
-    private Content createContent(String title, ContentTypeConverter.ContentType type) {
+    private Content createContent(String title, ContentTypeConverter.ContentType type, int produceTime) {
         switch (type) {
             case VIDEO:
-                return new VideoContent(title, 20);
+                return new VideoContent(title, 20, produceTime);
             case MUSIC:
-                return new MusicContent(title, 20);
+                return new MusicContent(title, 20, produceTime);
             case PHOTO:
-                return new PhotoContent(title, 10);
+                return new PhotoContent(title, 10, produceTime);
         }
         return null;
     }
 
 
+    private long subscribers;
     private long rating;
     private long money;
     private String nickName;
 
     final private TreeSet<Content> accountContent;
     final private HashSet<Content> producingContent;
-
-    private RedrawMainInfo callback;
 }

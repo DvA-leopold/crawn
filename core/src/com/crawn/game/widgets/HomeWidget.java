@@ -25,7 +25,7 @@ final public class HomeWidget extends Container<Stack> implements Observer {
         setVisible(false);
         this.producingContentContainer = new HashMap<>();
         for (Content producingElement: playAccount.getProducingContentElements()) {
-            producingContentContainer.put(producingElement, new ContentElementWidget(producingElement));
+            producingContentContainer.put(producingElement, new ProducingContentElementWidget(producingElement));
         }
 
         producingContentPane = initProducingVerticalGroup();
@@ -33,15 +33,6 @@ final public class HomeWidget extends Container<Stack> implements Observer {
         produceSettingsWidow = initProduceSettingsWindow(playAccount);
 
         setActor(new Stack(produceStatisticsMenu, produceSettingsWidow));
-    }
-
-
-    public void act(long progress) {
-        if (produceStatisticsMenu.isVisible()) {
-            for (ContentElementWidget contentWidget: producingContentContainer.values()) {
-                contentWidget.update(progress);
-            }
-        }
     }
 
     @Override
@@ -99,7 +90,7 @@ final public class HomeWidget extends Container<Stack> implements Observer {
     private VerticalGroup initProducingVerticalGroup() {
         final VerticalGroup producingContent = new VerticalGroup().columnLeft().left().reverse();
         if (producingContentContainer != null) {
-            for (ContentElementWidget contentWidget: producingContentContainer.values()) {
+            for (ProducingContentElementWidget contentWidget: producingContentContainer.values()) {
                 producingContent.addActor(contentWidget);
             }
         }
@@ -134,9 +125,10 @@ final public class HomeWidget extends Container<Stack> implements Observer {
                     final ContentTypeConverter.ContentType selectedType = stringToType(contentTypeSelectBox.getSelected());
                     final Content content = playAccount.produceContent(contentTitleField.getText(), selectedType, (int) contentQuality.getValue());
                     if (content != null) {
-                        final ContentElementWidget contentToAdd = new ContentElementWidget(content);
+                        final ProducingContentElementWidget contentToAdd = new ProducingContentElementWidget(content);
                         producingContentContainer.put(content, contentToAdd);
                         producingContentPane.addActor(contentToAdd);
+                        content.addUpdatable(contentToAdd);
                     }
                 } catch (final NoSuchElementException what) {
                     System.err.println(what.toString());
@@ -173,10 +165,9 @@ final public class HomeWidget extends Container<Stack> implements Observer {
     }
 
 
+    final private HashMap<Content, ProducingContentElementWidget> producingContentContainer;
     final private VerticalGroup producingContentPane;
 
-    final private HashMap<Content, ContentElementWidget> producingContentContainer;
     final private Container<Stack> produceStatisticsMenu;
-
     final private Container<Window> produceSettingsWidow;
 }

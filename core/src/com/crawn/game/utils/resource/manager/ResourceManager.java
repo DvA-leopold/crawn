@@ -132,12 +132,7 @@ final public class ResourceManager {
     }
 
     public Object get(String fileName) {
-        if (assetManager.isLoaded(fileName)) {
-            return assetManager.get(fileName);
-        } else {
-            System.err.println(fileName + " was not loaded");
-            return null;
-        }
+        return assetManager.get(fileName);
     }
 
     public float updateAndGetProgress() {

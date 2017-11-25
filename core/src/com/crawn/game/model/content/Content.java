@@ -1,11 +1,16 @@
 package com.crawn.game.model.content;
 
 
-import com.crawn.game.widgets.callbacks.RedrawContent;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Timer;
+import com.crawn.game.utils.components.Observable;
+import com.crawn.game.utils.components.Updatable;
 
 
-public abstract class Content {
-    Content(final String title, final int growFactor) {
+public abstract class Content extends Observable {
+    Content(final String title, final int growFactor, int timeToProduce) {
+        super();
+        this.timeToProduce = timeToProduce;
         this.title = title;
         this.growFactor = growFactor;
 
@@ -15,8 +20,31 @@ public abstract class Content {
         this.reposts = new Statistics(0);
     }
 
+    public void addUpdatable(Updatable updatableWidget) {
+        this.updatableWidget = updatableWidget;
+    }
+
+    public void update() {
+        timeFromStart++;
+        final int finishPercent = MathUtils.round(timeFromStart / ((float) timeToProduce / 100));
+        updatableWidget.update(finishPercent);
+        if (finishPercent >= 100) {
+            timeToProduce = 0;
+            finishTask.run();
+            finishTask = null;
+        }
+    }
+
+    public int getFinishPercent() {
+        return MathUtils.round(timeFromStart / ((float) timeToProduce / 100));
+    }
+
     public abstract void recalculateStatistic();
     public abstract String getImageStyle();
+
+    public void initTask(Timer.Task finishTask) {
+        this.finishTask = finishTask;
+    }
 
     public long getLikes(boolean byModule) {
         if (byModule) {
@@ -54,13 +82,9 @@ public abstract class Content {
         return title;
     }
 
-    public void registerRedrawCallback(RedrawContent redrawContent) {
-        callback = redrawContent;
-    }
 
-
-    protected RedrawContent callback;
-
+    private int timeToProduce;
+    private float timeFromStart;
     protected int growFactor;
 
     final protected Statistics likes;
@@ -69,4 +93,6 @@ public abstract class Content {
     final protected Statistics reposts;
 
     final private String title;
+    private Timer.Task finishTask;
+    private Updatable updatableWidget;
 }
