@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.model.content.*;
 import com.crawn.game.utils.components.Observable;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -23,9 +24,14 @@ final public class PlayAccount extends Observable {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                for (Content content: producingContent) {
-                    content.notifyObservers(content.getFinishPercent());
-                    content.update();
+                try {
+                    // FIXME, fix concurrent modification throw
+                    for (Content content: producingContent) {
+                        content.notifyObservers(content.getFinishPercent());
+                        content.update();
+                    }
+                } catch (ConcurrentModificationException err) {
+                    System.err.println("concurrent modyfy");
                 }
 
                 for (Content content: accountContent) {

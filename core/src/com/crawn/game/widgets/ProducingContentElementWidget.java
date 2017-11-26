@@ -24,10 +24,6 @@ public class ProducingContentElementWidget extends Table implements Updatable {
         if (isVisible()) {
             contentProgressBar.setValue(progress);
         }
-
-        if (progress >= 100) {
-
-        }
     }
 
 

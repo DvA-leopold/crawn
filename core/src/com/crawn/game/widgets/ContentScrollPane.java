@@ -18,7 +18,7 @@ public class ContentScrollPane extends ScrollPane implements Observer {
         if (finishedContent != null) {
             final ContentElementWidget contentWidget = new ContentElementWidget((Content) finishedContent);
             ((Content) finishedContent).addObserver(contentWidget);
-            ((VerticalGroup) getWidget()).addActor(contentWidget);
+            ((VerticalGroup) getActor()).addActor(contentWidget);
         }
     }
 }

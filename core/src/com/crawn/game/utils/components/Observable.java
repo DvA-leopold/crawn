@@ -16,7 +16,6 @@ public class Observable {
         observers.remove(observer);
     }
 
-
     public void notifyObservers(Object object) {
         for (Observer obs: observers) {
             obs.update(this, object);
