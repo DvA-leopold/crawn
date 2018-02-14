@@ -10,10 +10,10 @@ final public class PhotoContent extends Content {
 
     @Override
     public void recalculateStatistic() {
-        likes.increment(MathUtils.random(0, growFactor));
-        dislikes.increment(MathUtils.random(0, growFactor));
-        views.increment(MathUtils.random(0, growFactor));
-        reposts.increment(MathUtils.random(0, growFactor));
+        likes += MathUtils.random(0, growFactor);
+        dislikes += MathUtils.random(0, growFactor);
+        views += MathUtils.random(0, growFactor);
+        reposts += MathUtils.random(0, growFactor);
 
         notifyObservers(null);
     }

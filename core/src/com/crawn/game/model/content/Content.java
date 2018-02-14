@@ -14,10 +14,10 @@ public abstract class Content extends Observable {
         this.title = title;
         this.growFactor = growFactor;
 
-        this.likes = new Statistics(0);
-        this.dislikes = new Statistics(0);
-        this.views = new Statistics(0);
-        this.reposts = new Statistics(0);
+        this.likes = 0;
+        this.dislikes = 0;
+        this.views = 0;
+        this.reposts = 0;
     }
 
     public void addUpdatable(Updatable updatableWidget) {
@@ -46,36 +46,24 @@ public abstract class Content extends Observable {
         this.finishTask = finishTask;
     }
 
-    public long getLikes(boolean byModule) {
-        if (byModule) {
-            return likes.getValueByModule();
-        }
-        return likes.getValue();
+    public long getLikes() {
+        return likes;
     }
 
-    public long getDislikes(boolean byModule) {
-        if (byModule) {
-            return dislikes.getValueByModule();
-        }
-        return dislikes.getValue();
+    public long getDislikes() {
+        return dislikes;
     }
 
-    public long getViews(boolean byModule) {
-        if (byModule) {
-            return views.getValueByModule();
-        }
-        return views.getValue();
+    public long getViews() {
+        return views;
     }
 
-    public long getReposts(boolean byModule) {
-        if (byModule) {
-            return reposts.getValueByModule();
-        }
-        return reposts.getValue();
+    public long getReposts() {
+        return reposts;
     }
 
-    public void addViews() {
-        views.increment(1);
+    public void addViews(int value) {
+        views += value;
     }
 
     public String getTitle() {
@@ -85,12 +73,12 @@ public abstract class Content extends Observable {
 
     private int timeToProduce;
     private float timeFromStart;
-    protected int growFactor;
+    int growFactor;
 
-    final protected Statistics likes;
-    final protected Statistics dislikes;
-    final protected Statistics views;
-    final protected Statistics reposts;
+    long likes, newLikes;
+    long dislikes, newDislikes;
+    long views, newViews;
+    long reposts, newReposts;
 
     final private String title;
     private Timer.Task finishTask;

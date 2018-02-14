@@ -22,12 +22,6 @@ final public class ContentTypeConverter {
         return typesMapping.get(contentType);
     }
 
-    public enum ContentType {
-        VIDEO,
-        PHOTO,
-        MUSIC
-    }
-
 
     final private static HashMap<String, ContentType> typesMapping;
 }
