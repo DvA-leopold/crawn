@@ -35,9 +35,8 @@ final public class FreeTypeFontSkinLoader extends SkinLoader {
                 resources = parameter.resources;
             }
         }
-        TextureAtlas atlas = manager.get(textureAtlasPath, TextureAtlas.class);
-        Skin skin = new Skin(atlas);
-        String fontName = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.lastIndexOf("."));
+        final Skin skin = new Skin(manager.get(textureAtlasPath, TextureAtlas.class));
+        final String fontName = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.lastIndexOf("."));
         skin.add(fontName, generateFont(file.pathWithoutExtension() + ".ttf"));
 
         if (resources != null) {
@@ -53,8 +52,8 @@ final public class FreeTypeFontSkinLoader extends SkinLoader {
     private BitmapFont generateFont(String fileName) {
         FileHandle file = new FileHandle(new File(fileName));
 
-        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(file);
-        FreetypeFontLoader.FreeTypeFontLoaderParameter parameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        final FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(file);
+        final FreetypeFontLoader.FreeTypeFontLoaderParameter parameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         parameter.fontFileName = fileName;
         parameter.fontParameters.size = Gdx.graphics.getHeight() * 16 / Gdx.graphics.getWidth();
         parameter.fontParameters.color = Color.BLACK;

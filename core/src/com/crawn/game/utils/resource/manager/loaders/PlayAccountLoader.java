@@ -8,10 +8,10 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.crawn.game.model.PlayAccount;
+import com.crawn.game.model.accounts.MyAccount;
 
 
-final public class PlayAccountLoader extends SynchronousAssetLoader<PlayAccount, PlayAccountLoader.PlayAccountParameter> {
+final public class PlayAccountLoader extends SynchronousAssetLoader<MyAccount, PlayAccountLoader.PlayAccountParameter> {
     public PlayAccountLoader() {
         super(new InternalFileHandleResolver());
     }
@@ -22,10 +22,10 @@ final public class PlayAccountLoader extends SynchronousAssetLoader<PlayAccount,
     }
 
     @Override
-    public PlayAccount load(AssetManager assetManager, String fileName, FileHandle file, PlayAccountParameter parameter) {
-        return new Json().fromJson(PlayAccount.class, file);
+    public MyAccount load(AssetManager assetManager, String fileName, FileHandle file, PlayAccountParameter parameter) {
+        return new Json().fromJson(MyAccount.class, file);
     }
 
 
-    static class PlayAccountParameter extends AssetLoaderParameters<PlayAccount> { }
+    static class PlayAccountParameter extends AssetLoaderParameters<MyAccount> { }
 }

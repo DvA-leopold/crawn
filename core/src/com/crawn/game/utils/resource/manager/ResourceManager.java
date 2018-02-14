@@ -3,6 +3,8 @@ package com.crawn.game.utils.resource.manager;
 
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.btree.BehaviorTree;
+import com.badlogic.gdx.ai.btree.utils.BehaviorTreeLoader;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
@@ -15,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.crawn.game.model.PlayAccount;
+import com.crawn.game.model.accounts.MyAccount;
 import com.crawn.game.utils.resource.manager.loaders.FreeTypeFontLoader;
 import com.crawn.game.utils.resource.manager.loaders.FreeTypeFontSkinLoader;
 import com.crawn.game.utils.resource.manager.loaders.PlayAccountLoader;
@@ -27,10 +29,11 @@ import java.util.*;
 final public class ResourceManager {
     private ResourceManager() {
         assetManager = new AssetManager();
-        assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
+        assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver())); // TODO do i really need this?
         assetManager.setLoader(BitmapFont.class, new FreeTypeFontLoader());
-        assetManager.setLoader(PlayAccount.class, new PlayAccountLoader());
+        assetManager.setLoader(MyAccount.class, new PlayAccountLoader());
         assetManager.setLoader(Skin.class, new FreeTypeFontSkinLoader());
+        assetManager.setLoader(BehaviorTree.class, new BehaviorTreeLoader(new InternalFileHandleResolver()));
 
         mimeFileTypes = new Hashtable<>();
         mimeFileTypes.put("png", Texture.class);
@@ -48,9 +51,11 @@ final public class ResourceManager {
         mimeFileTypes.put("ttf", BitmapFont.class);
 
         mimeFileTypes.put("json", Skin.class);
-        mimeFileTypes.put("cjson", PlayAccount.class);
+        mimeFileTypes.put("cjson", MyAccount.class);
 
         mimeFileTypes.put("properties", I18NBundle.class);
+
+        mimeFileTypes.put("btree", BehaviorTree.class);
     }
 
     public static ResourceManager instance() {
@@ -78,7 +83,7 @@ final public class ResourceManager {
                         {
                             FreetypeFontLoader.FreeTypeFontLoaderParameter params = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
                             params.fontFileName = sectionRoot.path() + "/" + fileName;
-                            assetManager.load(file.path(), BitmapFont.class, params);
+                            assetManager.load(file.path(), BitmapFont.class, params); // TODO try to refactor
                         }
                         default:
                             assetManager.load(file.path(), mimeFileTypes.get(extension));
