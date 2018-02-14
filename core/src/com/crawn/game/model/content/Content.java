@@ -7,7 +7,7 @@ import com.crawn.game.utils.components.Observable;
 import com.crawn.game.utils.components.Updatable;
 
 
-public abstract class Content extends Observable {
+public abstract class Content extends Observable implements Comparable {
     Content(final String title, final int growFactor, int timeToProduce) {
         super();
         this.timeToProduce = timeToProduce;
@@ -33,6 +33,11 @@ public abstract class Content extends Observable {
             finishTask.run();
             finishTask = null;
         }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return -1;
     }
 
     public int getFinishPercent() {
