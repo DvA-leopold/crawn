@@ -5,15 +5,16 @@ import com.badlogic.gdx.ai.btree.Task;
 import com.crawn.game.model.accounts.VillainAccount;
 
 
-public class ProduceContent extends LeafTask<VillainAccount> {
+public class Produce extends LeafTask<VillainAccount> {
 
     @Override
     public Status execute() {
+        System.out.println("produce");
         return null;
     }
 
     @Override
     protected Task<VillainAccount> copyTo(Task<VillainAccount> task) {
-        return null;
+        return task;
     }
 }
