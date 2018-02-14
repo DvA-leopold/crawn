@@ -18,15 +18,15 @@ public final class ContentElementWidget extends Table implements Observer {
         contentPicture.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                content.addViews();
-                views.setText("views: " + content.getViews(false));
+                content.addViews(1);
+                views.setText("views: " + content.getViews());
             }
         });
 
-        likes = new Label("likes: " + content.getLikes(false), skin);
-        dislikes = new Label("dislikes: " + content.getDislikes(false), skin);
-        views = new Label("views: " + content.getViews(false), skin);
-        reposts = new Label("reposts: " + content.getReposts(false), skin);
+        likes = new Label("likes: " + content.getLikes(), skin);
+        dislikes = new Label("dislikes: " + content.getDislikes(), skin);
+        views = new Label("views: " + content.getViews(), skin);
+        reposts = new Label("reposts: " + content.getReposts(), skin);
 
         add(contentPicture).size(CONTENT_PICK_SIZE);
 
@@ -42,10 +42,10 @@ public final class ContentElementWidget extends Table implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         if (isVisible()) {
-            this.likes.setText("likes: " + ((Content) observable).getLikes(false));
-            this.dislikes.setText("dislikes: " + ((Content) observable).getDislikes(false));
-            this.views.setText("views: " + ((Content) observable).getViews(false));
-            this.reposts.setText("reposts: " + ((Content) observable).getReposts(false));
+            this.likes.setText("likes: " + ((Content) observable).getLikes());
+            this.dislikes.setText("dislikes: " + ((Content) observable).getDislikes());
+            this.views.setText("views: " + ((Content) observable).getViews());
+            this.reposts.setText("reposts: " + ((Content) observable).getReposts());
         }
     }
 

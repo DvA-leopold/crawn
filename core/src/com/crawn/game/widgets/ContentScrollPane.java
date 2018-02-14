@@ -8,8 +8,8 @@ import com.crawn.game.utils.components.Observable;
 import com.crawn.game.utils.components.Observer;
 
 
-public class ContentScrollPane extends ScrollPane implements Observer {
-    ContentScrollPane(Actor widget) {
+final public class ContentScrollPane extends ScrollPane implements Observer {
+    ContentScrollPane(final Actor widget) {
         super(widget);
     }
 

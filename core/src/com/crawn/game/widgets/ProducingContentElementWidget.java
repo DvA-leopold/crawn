@@ -8,7 +8,7 @@ import com.crawn.game.utils.resource.manager.ResourceManager;
 import static com.crawn.game.utils.StaticUtils.CONTENT_PICK_SIZE;
 
 
-public class ProducingContentElementWidget extends Table implements Updatable {
+final public class ProducingContentElementWidget extends Table implements Updatable {
     ProducingContentElementWidget(final Content content) {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
         contentProgressBar = new ProgressBar(0, 100, 1, false, skin);

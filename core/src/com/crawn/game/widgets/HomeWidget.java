@@ -6,31 +6,31 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.crawn.game.model.PlayAccount;
+import com.crawn.game.model.accounts.MyAccount;
 import com.crawn.game.model.content.Content;
-import com.crawn.game.model.content.ContentTypeConverter;
 import com.crawn.game.utils.components.Observable;
 import com.crawn.game.utils.components.Observer;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 import static com.crawn.game.model.content.ContentTypeConverter.stringToType;
 import static com.crawn.game.utils.StaticUtils.*;
 
 
 final public class HomeWidget extends Container<Stack> implements Observer {
-    HomeWidget(final PlayAccount playAccount) {
+    HomeWidget(final MyAccount myAccount) {
         setVisible(false);
         this.producingContentContainer = new HashMap<>();
-        for (Content producingElement: playAccount.getProducingContentElements()) {
+        for (Content producingElement: myAccount.getProducingContentElements()) {
             producingContentContainer.put(producingElement, new ProducingContentElementWidget(producingElement));
         }
 
         producingContentPane = initProducingVerticalGroup();
         produceStatisticsMenu = initProduceStatusMenu();
-        produceSettingsWidow = initProduceSettingsWindow(playAccount);
+        produceSettingsWidow = initProduceSettingsWindow(myAccount);
 
         setActor(new Stack(produceStatisticsMenu, produceSettingsWidow));
     }
@@ -62,7 +62,7 @@ final public class HomeWidget extends Container<Stack> implements Observer {
         return produceStatisticsMenu;
     }
 
-    private Container<Window> initProduceSettingsWindow(final PlayAccount playAccount) {
+    private Container<Window> initProduceSettingsWindow(final MyAccount myAccount) {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
 
         final VerticalGroup settingsGroup = new VerticalGroup().columnLeft();
@@ -78,7 +78,11 @@ final public class HomeWidget extends Container<Stack> implements Observer {
         produceSettingsWidow.add(contentQuality);
         produceSettingsWidow.add(settingsGroup).row();
         final Table buttonGroup = new Table();
-        final ImageButton approveContentButton = createApproveContentButton(skin, playAccount, contentTitleField, contentQuality, contentTypeSelectBox);
+        final ImageButton approveContentButton = createApproveContentButton(skin, () -> myAccount.produceContent(
+                contentTitleField.getText(),
+                stringToType(contentTypeSelectBox.getSelected()),
+                (int) contentQuality.getValue(),
+                true));
         buttonGroup.add(approveContentButton).size(BUTTON_SIZE).right();
         buttonGroup.add(createDiscardContentButton(skin)).size(BUTTON_SIZE).right();
         produceSettingsWidow.add(buttonGroup).bottom().colspan(2);
@@ -110,11 +114,7 @@ final public class HomeWidget extends Container<Stack> implements Observer {
         return discardContentButton;
     }
 
-    private ImageButton createApproveContentButton(final Skin skin,
-                                                   final PlayAccount playAccount,
-                                                   final TextField contentTitleField,
-                                                   final Slider contentQuality,
-                                                   final SelectBox<String> contentTypeSelectBox) {
+    private ImageButton createApproveContentButton(final Skin skin, final Supplier<Content> produceContent) {
         final ImageButton makeContentButton = new ImageButton(skin, "make_content");
         makeContentButton.addListener(new ClickListener() {
             @Override
@@ -122,8 +122,7 @@ final public class HomeWidget extends Container<Stack> implements Observer {
                 produceStatisticsMenu.setVisible(true);
                 produceSettingsWidow.setVisible(false);
                 try {
-                    final ContentTypeConverter.ContentType selectedType = stringToType(contentTypeSelectBox.getSelected());
-                    final Content content = playAccount.produceContent(contentTitleField.getText(), selectedType, (int) contentQuality.getValue());
+                    final Content content = produceContent.get();
                     if (content != null) {
                         final ProducingContentElementWidget contentToAdd = new ProducingContentElementWidget(content);
                         producingContentContainer.put(content, contentToAdd);
