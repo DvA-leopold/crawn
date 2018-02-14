@@ -1,0 +1,19 @@
+import analyze:"com.crawn.game.model.ai.tasks.Analyze"
+import produce:"com.crawn.game.model.ai.tasks.Produce"
+import strike:"com.crawn.game.model.ai.tasks.Strike"
+import wait:"com.crawn.game.model.ai.tasks.Wait"
+
+
+root
+  selector
+    parallel
+      analyze urgentProb:0.8
+    randomSelector
+      untilSuccess
+        sequence
+          analyze times:"uniform,1,2"
+          strike
+          produce
+      parallel policy:"selector"
+        wait seconds:"triangular,2.5,5.5"
+        analyze
