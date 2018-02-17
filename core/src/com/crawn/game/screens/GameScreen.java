@@ -8,21 +8,25 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.Crawn;
-import com.crawn.game.model.accounts.AccountManager;
+import com.crawn.game.model.accounts.MyAccount;
+import com.crawn.game.model.accounts.VillainAccount;
 import com.crawn.game.utils.resource.manager.ResourceManager;
 import com.crawn.game.widgets.GameWidgetGroup;
+
+import java.util.Vector;
 
 
 final public class GameScreen implements Screen {
     GameScreen() {
         batch = ((Crawn) Gdx.app.getApplicationListener()).getMainBatch();
         background = new Sprite((Texture) ResourceManager.instance().get("textures/bg.jpg"));
-        accountManager = new AccountManager();
+        myAccount = new MyAccount("awesome acc", 0 , 0, 0);
+        villainAccounts = new Vector<>();
     }
 
     @Override
     public void show() {
-        ((Crawn) Gdx.app.getApplicationListener()).getStage().addActor(new GameWidgetGroup(accountManager));
+        ((Crawn) Gdx.app.getApplicationListener()).getStage().addActor(new GameWidgetGroup(myAccount, villainAccounts));
     }
 
     @Override
@@ -44,6 +48,10 @@ final public class GameScreen implements Screen {
     @Override
     public void resume() {
         Timer.instance().delay(TimeUtils.millis() - timerDelay);
+        myAccount.resume(timerDelay);
+        for (VillainAccount villainAccount: villainAccounts) {
+            villainAccount.resume(timerDelay);
+        }
         Timer.instance().start();
     }
 
@@ -54,13 +62,16 @@ final public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-//        Gdx.files.local("account_userdata/play_account.cjson").writeString(new Json().toJson(account), false);
+
     }
 
 
     private long timerDelay;
-    final private AccountManager accountManager;
-    
+
     final private Sprite background;
     final private Batch batch;
+
+    final private MyAccount myAccount;
+    final private Vector<VillainAccount> villainAccounts;
+
 }

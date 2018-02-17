@@ -2,6 +2,7 @@ package com.crawn.game.model.accounts;
 
 import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.ai.btree.utils.BehaviorTreeLibraryManager;
+import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.model.content.Content;
 
 
@@ -9,11 +10,14 @@ final public class VillainAccount extends Account {
     public VillainAccount(final String nickName, long subscribers, long rating, long money) {
         super(nickName, subscribers, rating, money);
         accountAI = BehaviorTreeLibraryManager.getInstance().createBehaviorTree("villainAI");
-    }
 
-    void act() {
-        accountAI.step();
-        recalculateAccountResources();
+        Timer.instance().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                accountAI.step();
+                recalculateAccountResources();
+            }
+        }, 1, 5, Integer.MAX_VALUE);
     }
 
 
@@ -25,8 +29,12 @@ final public class VillainAccount extends Account {
             newReposts += content.getReposts();
         }
 
-        subscribers = accountStatistics.recalculateSubscribers(newLikes, newDislikes, newReposts);
-        rating = accountStatistics.recalculateRating(newLikes, newDislikes, newReposts);
+        subscribers += accountStatistics.recalculateSubscribers(newLikes, newDislikes, newReposts);
+        rating += accountStatistics.recalculateRating(newLikes, newDislikes, newReposts);
+    }
+
+    public void resume(long timeDelay) {
+
     }
 
 

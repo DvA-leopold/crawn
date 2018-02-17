@@ -9,7 +9,7 @@ import java.util.Objects;
 
 
 final public class MyAccount extends Account {
-    MyAccount(final String nickName, long subscribers, long rating, long money) {
+    public MyAccount(final String nickName, long subscribers, long rating, long money) {
         super(nickName, subscribers, rating, money);
         this.producingContent = new HashSet<>();
 
@@ -27,29 +27,27 @@ final public class MyAccount extends Account {
                 }
 
                 for (Content content: accountContent) {
-                    content.recalculateStatistic();
+                    content.recalculateContentRating();
                 }
             }
         }, 1, 1, Integer.MAX_VALUE);
     }
 
     public Content produceContent(String title, ContentType contentType, int quality, boolean withAdds) {
-        int contentPrice = getContentPrice(contentType, quality);
+        int contentPrice = calculateContentPrice(contentType, quality);
         if (contentPrice > money) {
             return null;
         }
 
         final int produceTime = getContentProduceTime(contentType, quality);
-        final Content content = createContent(title, contentType, produceTime);
+        final Content content = createContent(title, contentType, produceTime, withAdds);
         producingContent.add(content);
         Objects.requireNonNull(content).initTask(new Timer.Task() {
             @Override
             public void run() {
                 accountContent.add(content);
                 producingContent.remove(content);
-                if (withAdds) {
-                    money += accountStatistics.advertisingMoney();
-                }
+                money += content.advertisingMoney();
                 notifyObservers(content);
             }
         });
@@ -58,16 +56,38 @@ final public class MyAccount extends Account {
         return content;
     }
 
+    public void resume(long timeDelay) {
+
+    }
+
     public HashSet<Content> getProducingContentElements() {
         return producingContent;
     }
 
-    private int getContentPrice(ContentType contentType, int quality) {
-        return 0;
+    private int calculateContentPrice(ContentType contentType, int quality) {
+        switch (contentType) {
+            case PHOTO:
+                return 20 * quality;
+            case MUSIC:
+                return 30 * quality;
+            case VIDEO:
+                return 40 * quality;
+            default:
+                return Integer.MAX_VALUE;
+        }
     }
 
     private int getContentProduceTime(ContentType contentType, int quality) {
-        return 15;
+        switch (contentType) {
+            case PHOTO:
+                return 15 * quality;
+            case MUSIC:
+                return 40 * quality;
+            case VIDEO:
+                return 50 * quality;
+            default:
+                return 100;
+        }
     }
 
 

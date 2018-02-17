@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.crawn.game.model.accounts.AccountManager;
 import com.crawn.game.model.accounts.MyAccount;
 import com.crawn.game.model.accounts.VillainAccount;
 import com.crawn.game.model.content.Content;
@@ -18,18 +17,18 @@ import static com.crawn.game.utils.StaticUtils.MENU_BUTTON_HEIGHT;
 
 
 final public class GameWidgetGroup extends Table {
-    public GameWidgetGroup(final AccountManager accountManager) {
+    public GameWidgetGroup(final MyAccount myAccount, final Vector<VillainAccount> villainAccounts) {
         setFillParent(true);
         top().left();
 
-        accountContentPane = initContentScrollPane(accountManager.getAccount());
-        accountsPane = initAccountsScrollPane(accountManager.getVillainAccounts());
-        accountInfoWidget = new AccountInfoWidget(accountManager.getAccount());
-        homeWidget = new HomeWidget(accountManager.getAccount());
+        accountContentPane = initContentScrollPane(myAccount);
+        accountsPane = initAccountsScrollPane(villainAccounts);
+        accountInfoWidget = new AccountInfoWidget(myAccount);
+        homeWidget = new HomeWidget(myAccount);
 
-        accountManager.getAccount().addObserver(homeWidget);
-        accountManager.getAccount().addObserver(accountContentPane);
-        accountManager.getAccount().addObserver(accountInfoWidget);
+        myAccount.addObserver(homeWidget);
+        myAccount.addObserver(accountContentPane);
+        myAccount.addObserver(accountInfoWidget);
 
         add(accountInfoWidget).top().left().row();
         add(initButtonsTable()).row();

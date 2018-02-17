@@ -71,7 +71,7 @@ final public class ResourceManager {
         FileHandle sectionRoot = Gdx.files.internal(section);
         try {
             FileHandle[] allFiles = getFiles(sectionRoot);
-            for (FileHandle file : allFiles) {
+            for (FileHandle file: allFiles) {
                 String fileName = file.file().getName();
                 String extension = getExtension(fileName);
                 if (mimeFileTypes.containsKey(extension)) {
@@ -107,7 +107,7 @@ final public class ResourceManager {
         FileHandle sectionRoot = Gdx.files.internal(section);
         try {
             FileHandle[] allFiles = getFiles(sectionRoot);
-            for (FileHandle allFile : allFiles) {
+            for (FileHandle allFile: allFiles) {
                 assetManager.unload(allFile.path());
             }
         } catch (FileNotFoundException e) {
@@ -159,7 +159,7 @@ final public class ResourceManager {
         fileHandles.add(sectionForLoading);
         while (!fileHandles.isEmpty()) {
             FileHandle[] filesInFolder = fileHandles.poll().list();
-            for (FileHandle aFilesInFolder : filesInFolder) {
+            for (FileHandle aFilesInFolder: filesInFolder) {
                 if (aFilesInFolder.isDirectory()) {
                     fileHandles.add(aFilesInFolder);
                 } else {

@@ -6,7 +6,7 @@ import com.crawn.game.utils.components.Observable;
 import java.util.TreeSet;
 
 
-public abstract class Account extends Observable {
+public class Account extends Observable {
     Account(String nickName, long subscribers, long rating, long money) {
         this.accountStatistics = new StatisticsManager();
         this.accountContent = new TreeSet<>();
@@ -36,14 +36,14 @@ public abstract class Account extends Observable {
         return accountContent;
     }
 
-    Content createContent(String title, ContentType type, int produceTime) {
+    Content createContent(String title, ContentType type, int produceTime, boolean withAdds) {
         switch (type) {
             case VIDEO:
-                return new VideoContent(title, 20, produceTime);
+                return new VideoContent(title, 20, produceTime, withAdds);
             case MUSIC:
-                return new MusicContent(title, 20, produceTime);
+                return new MusicContent(title, 20, produceTime, withAdds);
             case PHOTO:
-                return new PhotoContent(title, 10, produceTime);
+                return new PhotoContent(title, 10, produceTime, withAdds);
         }
         return null;
     }
