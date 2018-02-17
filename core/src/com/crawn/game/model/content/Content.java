@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 
 public abstract class Content extends Observable implements Comparable {
-    Content(final String title, int growFactor, int quality, boolean monetize) {
+    Content(final String title, float growFactor, int quality, boolean monetize) {
         this.title = title;
         this.growFactor = growFactor;
         this.monetize = monetize;
@@ -122,8 +122,9 @@ public abstract class Content extends Observable implements Comparable {
     private int timeToProduce;
     private float timeFromStart;
 
-    int growFactor;
+    float growFactor;
     final boolean monetize;
+    boolean growComplete;
 
     long likes, newLikes;
     long dislikes, newDislikes;

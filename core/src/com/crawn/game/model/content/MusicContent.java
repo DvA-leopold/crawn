@@ -6,16 +6,23 @@ import java.util.TreeSet;
 
 
 final public class MusicContent extends Content {
-    public MusicContent(final String title, int growFactor, int quality, boolean withAdds) {
+    public MusicContent(final String title, float growFactor, int quality, boolean withAdds) {
         super(title, growFactor, quality, withAdds);
     }
 
     @Override
     public void recalculateContentRating(long subscribers) {
-        newLikes += MathUtils.random(0, growFactor);
-        newDislikes += MathUtils.random(0, growFactor);
-        newViews += MathUtils.random(0, growFactor);
-        newReposts += MathUtils.random(0, growFactor);
+        if (growComplete) {
+            growFactor = Math.max(0, growFactor - MathUtils.random(growFactor / 10, growFactor / 3));
+        } else {
+            growFactor += MathUtils.random(growFactor / 5, growFactor / 2);
+            growComplete = growFactor > 16;
+        }
+
+        newLikes += MathUtils.random(0, growFactor * subscribers * 0.05f);
+        newDislikes += MathUtils.random(0, growFactor * subscribers * 0.01f);
+        newViews += MathUtils.random(subscribers * 0.5f * growFactor, growFactor * subscribers);
+        newReposts += MathUtils.random(0, growFactor * subscribers * 0.015f + newLikes * 0.01f);
 
         notifyObservers(null);
     }
