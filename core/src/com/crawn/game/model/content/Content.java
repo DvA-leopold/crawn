@@ -14,7 +14,7 @@ public abstract class Content extends Observable implements Comparable {
         this.title = title;
         this.growFactor = growFactor;
         this.monetize = monetize;
-        this.timeToProduce = getContentProduceTime(quality);
+        this.timeToProduce = 5; // getContentProduceTime(quality);
     }
 
     public void update() {
@@ -54,6 +54,7 @@ public abstract class Content extends Observable implements Comparable {
     public void initTask(Timer.Task finishTask) {
         this.finishTask = finishTask;
     }
+
     public void addUpdatable(Updatable updatableWidget) {
         this.updatableWidget = updatableWidget;
     }
@@ -83,13 +84,6 @@ public abstract class Content extends Observable implements Comparable {
 
     public long getDislikes() {
         return dislikes;
-    }
-
-    public long getNewViews() {
-        long tmpViews = newViews;
-        views += newViews;
-        newViews = 0;
-        return tmpViews;
     }
 
     public long getViews() {
@@ -128,7 +122,7 @@ public abstract class Content extends Observable implements Comparable {
 
     long likes, newLikes;
     long dislikes, newDislikes;
-    long views, newViews;
+    long views;
     long reposts, newReposts;
 
     final private String title;

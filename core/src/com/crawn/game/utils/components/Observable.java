@@ -4,7 +4,7 @@ import java.util.Vector;
 
 
 public class Observable {
-    public Observable() {
+    protected Observable() {
         observers = new Vector<>();
     }
 

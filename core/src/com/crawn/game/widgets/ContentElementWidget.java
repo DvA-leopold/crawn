@@ -16,13 +16,13 @@ public final class ContentElementWidget extends Table implements Observer {
     ContentElementWidget(final Content content) {
         final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
         final ImageButton contentPicture = new ImageButton(skin, content.getImageStyle());
-        contentPicture.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                content.addViews(1);
-                views.setText("views: " + content.getNewViews());
-            }
-        });
+//        contentPicture.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                content.addViews(1);
+//                views.setText("views: " + content.getNewViews());
+//            }
+//        });
 
         likes = new Label("likes: " + content.getLikes(), skin);
         dislikes = new Label("dislikes: " + content.getDislikes(), skin);

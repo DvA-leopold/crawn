@@ -32,11 +32,19 @@ final public class MyAccount extends Account {
                 }
             }
         }, 1, 1, Integer.MAX_VALUE);
+
+        Timer.instance().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                recalculateAccountRating();
+            }
+        }, 5, 5, Integer.MAX_VALUE);
     }
 
     public Content produceContent(String title, ContentType contentType, int quality, boolean monetize) {
         int contentPrice = Content.calculateContentPrice(contentType, quality);
         if (contentPrice > money) {
+            Gdx.app.log("Game", "not enought money to produce, price: " + contentPrice + " u have: " + money);
             return null;
         }
 

@@ -14,16 +14,16 @@ final public class PhotoContent extends Content {
     @Override
     public void recalculateContentRating(long subscribers) {
         if (growComplete) {
-            growFactor = Math.max(0, growFactor - MathUtils.random(growFactor / 10, growFactor / 3));
+            growFactor = Math.max(0, growFactor - MathUtils.random(growFactor * 0.1f, growFactor * 0.2f));
         } else {
             growFactor += MathUtils.random(growFactor / 5, growFactor / 2);
             growComplete = growFactor > 11;
         }
 
-        newLikes += MathUtils.random(0, growFactor * subscribers * 0.05f);
-        newDislikes += MathUtils.random(0, growFactor * subscribers * 0.01f);
-        newViews += MathUtils.random(subscribers * 0.5f * growFactor, growFactor * subscribers);
-        newReposts += MathUtils.random(0, growFactor * subscribers * 0.015f);
+        newLikes += MathUtils.random(0, Math.max(growFactor * subscribers * 0.05f, 3));
+        newDislikes += MathUtils.random(0, Math.max(growFactor * subscribers * 0.01f, 3));
+        views += MathUtils.random(subscribers * 0.5f * growFactor, Math.max(growFactor * subscribers, 3));
+        newReposts += MathUtils.random(0, Math.max(growFactor * subscribers * 0.015f, 3));
 
         notifyObservers(null);
     }

@@ -19,10 +19,10 @@ final public class MusicContent extends Content {
             growComplete = growFactor > 16;
         }
 
-        newLikes += MathUtils.random(0, growFactor * subscribers * 0.05f);
-        newDislikes += MathUtils.random(0, growFactor * subscribers * 0.01f);
-        newViews += MathUtils.random(subscribers * 0.5f * growFactor, growFactor * subscribers);
-        newReposts += MathUtils.random(0, growFactor * subscribers * 0.015f + newLikes * 0.01f);
+        newLikes += MathUtils.random(0, Math.max(growFactor * subscribers * 0.05f, 10));
+        newDislikes += MathUtils.random(0, Math.max(growFactor * subscribers * 0.01f, 10));
+        views += MathUtils.random(growFactor * subscribers * 10, Math.max(growFactor * subscribers, 10) * 10);
+        newReposts += MathUtils.random(0, Math.max(growFactor * subscribers * 0.015f + newLikes * 0.01f, 10));
 
         notifyObservers(null);
     }

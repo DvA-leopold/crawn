@@ -20,10 +20,10 @@ final public class VideoContent extends Content {
             growComplete = growFactor > 10;
         }
 
-        newLikes += MathUtils.random(0, growFactor);
-        newDislikes += MathUtils.random(0, growFactor);
-        newViews += MathUtils.random(0, growFactor);
-        newReposts += MathUtils.random(0, growFactor);
+        newLikes += MathUtils.random(0, Math.max(growFactor * subscribers * 0.05f, 8));
+        newDislikes += MathUtils.random(0, Math.max(growFactor * subscribers * 0.01f, 8));
+        views += MathUtils.random(growFactor * subscribers * 0.5f, Math.max(growFactor * subscribers, 8));
+        newReposts += MathUtils.random(0, Math.max(growFactor * subscribers * 0.015f + newLikes * 0.01f, 8));
 
         notifyObservers(null);
     }

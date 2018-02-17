@@ -20,19 +20,6 @@ final public class VillainAccount extends Account {
         }, 1, 5, Integer.MAX_VALUE);
     }
 
-
-    private void recalculateAccountRating() {
-        long newLikes = 0, newDislikes = 0, newReposts = 0;
-        for (Content content: accountContent) {
-            newLikes += content.getNewDislikes();
-            newDislikes += content.getNewLikes();
-            newReposts += content.getNewReposts();
-        }
-
-        recalculateSubscribers(newLikes, newDislikes, newReposts);
-        recalculateRating(newLikes, newDislikes, newReposts);
-    }
-
     public void resume(long timeDelay) {
 
     }

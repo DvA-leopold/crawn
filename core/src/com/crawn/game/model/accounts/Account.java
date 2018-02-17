@@ -16,12 +16,26 @@ public class Account extends Observable {
         this.money = money;
     }
 
-    void recalculateSubscribers(long newLikes, long newDislikes, long newReposts) {
-        subscribers = (long) (MathUtils.random(0.1f, 3.3f) * (newReposts * 0.5 * (newLikes - newDislikes)));
+    private void recalculateSubscribers(long newLikes, long newDislikes, long newReposts) {
+        subscribers += (long) (MathUtils.random(0.1f, 3.3f) * (newReposts * 0.5 * (newLikes - newDislikes)));
+        subscribers = Math.max(0, subscribers);
     }
 
-    void recalculateRating(long newLikes, long newDislikes, long newReposts) {
-        rating = (long) (MathUtils.random(0.5f, 5.5f) * (newReposts * 0.5 * (newLikes - newDislikes)));
+    private void recalculateRating(long newLikes, long newDislikes, long newReposts) {
+        rating += (long) (MathUtils.random(0.5f, 5.5f) * (newReposts * 0.5 * (newLikes - newDislikes)));
+    }
+
+    void recalculateAccountRating() {
+        long newLikes = 0, newDislikes = 0, newReposts = 0;
+        for (Content content: accountContent) {
+            newLikes += content.getNewDislikes();
+            newDislikes += content.getNewLikes();
+            newReposts += content.getNewReposts();
+        }
+
+        recalculateSubscribers(newLikes, newDislikes, newReposts);
+        recalculateRating(newLikes, newDislikes, newReposts);
+        notifyObservers(null);
     }
 
     Content createContent(String title, ContentType type, int quality, boolean monetize) {

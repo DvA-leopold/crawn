@@ -20,7 +20,7 @@ final public class GameScreen implements Screen {
     GameScreen() {
         batch = ((Crawn) Gdx.app.getApplicationListener()).getMainBatch();
         background = new Sprite((Texture) ResourceManager.instance().get("textures/bg.jpg"));
-        myAccount = new MyAccount("awesome acc", 0 , 0, 0);
+        myAccount = new MyAccount("awesome acc", 0 , 0, 100000);
         villainAccounts = new Vector<>();
     }
 
