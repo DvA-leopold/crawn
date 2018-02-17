@@ -1,5 +1,6 @@
 package com.crawn.game.model.accounts;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.model.content.*;
 
@@ -23,31 +24,30 @@ final public class MyAccount extends Account {
                         content.update();
                     }
                 } catch (ConcurrentModificationException err) {
-                    System.err.println("concurrent modyfy");
+                    Gdx.app.error("Account", "concurrent modification exception");
                 }
 
                 for (Content content: accountContent) {
-                    content.recalculateContentRating();
+                    content.recalculateContentRating(subscribers);
                 }
             }
         }, 1, 1, Integer.MAX_VALUE);
     }
 
-    public Content produceContent(String title, ContentType contentType, int quality, boolean withAdds) {
-        int contentPrice = calculateContentPrice(contentType, quality);
+    public Content produceContent(String title, ContentType contentType, int quality, boolean monetize) {
+        int contentPrice = Content.calculateContentPrice(contentType, quality);
         if (contentPrice > money) {
             return null;
         }
 
-        final int produceTime = getContentProduceTime(contentType, quality);
-        final Content content = createContent(title, contentType, produceTime, withAdds);
+        final Content content = createContent(title, contentType, quality, monetize);
         producingContent.add(content);
         Objects.requireNonNull(content).initTask(new Timer.Task() {
             @Override
             public void run() {
                 accountContent.add(content);
                 producingContent.remove(content);
-                money += content.advertisingMoney();
+                money += content.monetize(accountContent);
                 notifyObservers(content);
             }
         });
@@ -62,32 +62,6 @@ final public class MyAccount extends Account {
 
     public HashSet<Content> getProducingContentElements() {
         return producingContent;
-    }
-
-    private int calculateContentPrice(ContentType contentType, int quality) {
-        switch (contentType) {
-            case PHOTO:
-                return 20 * quality;
-            case MUSIC:
-                return 30 * quality;
-            case VIDEO:
-                return 40 * quality;
-            default:
-                return Integer.MAX_VALUE;
-        }
-    }
-
-    private int getContentProduceTime(ContentType contentType, int quality) {
-        switch (contentType) {
-            case PHOTO:
-                return 15 * quality;
-            case MUSIC:
-                return 40 * quality;
-            case VIDEO:
-                return 50 * quality;
-            default:
-                return 100;
-        }
     }
 
 

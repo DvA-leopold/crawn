@@ -19,7 +19,7 @@ public final class ContentElementWidget extends Table implements Observer {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 content.addViews(1);
-                views.setText("views: " + content.getViews());
+                views.setText("views: " + content.getNewViews());
             }
         });
 

@@ -15,22 +15,22 @@ final public class VillainAccount extends Account {
             @Override
             public void run() {
                 accountAI.step();
-                recalculateAccountResources();
+                recalculateAccountRating();
             }
         }, 1, 5, Integer.MAX_VALUE);
     }
 
 
-    public void recalculateAccountResources() {
+    private void recalculateAccountRating() {
         long newLikes = 0, newDislikes = 0, newReposts = 0;
         for (Content content: accountContent) {
-            newLikes += content.getDislikes();
-            newDislikes += content.getLikes();
-            newReposts += content.getReposts();
+            newLikes += content.getNewDislikes();
+            newDislikes += content.getNewLikes();
+            newReposts += content.getNewReposts();
         }
 
-        subscribers += accountStatistics.recalculateSubscribers(newLikes, newDislikes, newReposts);
-        rating += accountStatistics.recalculateRating(newLikes, newDislikes, newReposts);
+        recalculateSubscribers(newLikes, newDislikes, newReposts);
+        recalculateRating(newLikes, newDislikes, newReposts);
     }
 
     public void resume(long timeDelay) {

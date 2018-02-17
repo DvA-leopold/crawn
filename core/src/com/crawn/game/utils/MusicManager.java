@@ -90,7 +90,7 @@ final public class MusicManager {
                     }
                     break;
                 default:
-                    System.err.println("this music sample are not registered");
+                    Gdx.app.error("MusicManager", "this music sample are not registered");
                     break;
             }
         }
@@ -110,7 +110,7 @@ final public class MusicManager {
                     }
                     break;
                 default:
-                    System.err.println("this music sample are not registered");
+                    Gdx.app.error("MusicManager", "this music sample are not registered");
                     break;
             }
         }
@@ -130,7 +130,7 @@ final public class MusicManager {
                     }
                     break;
                 default:
-                    System.err.println("this music sample are not registered");
+                    Gdx.app.error("MusicManager", "this music sample are not registered");
                     break;
             }
         }
