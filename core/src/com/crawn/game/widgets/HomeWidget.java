@@ -1,10 +1,8 @@
 package com.crawn.game.widgets;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.crawn.game.model.accounts.MyAccount;
 import com.crawn.game.model.content.Content;
@@ -98,6 +96,7 @@ final public class HomeWidget extends Container<Stack> implements Observer {
                 producingContent.addActor(contentWidget);
             }
         }
+        producingContent.debug();
         return producingContent;
     }
 
@@ -141,24 +140,24 @@ final public class HomeWidget extends Container<Stack> implements Observer {
     private SelectBox<String> initContentTypeSelectBox(final Skin skin) {
         final SelectBox<String> contentTypeSelectBox = new SelectBox<>(skin, "content_type_select");
         contentTypeSelectBox.setItems("video", "photo", "music");
-        contentTypeSelectBox.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("item change to: " + ((SelectBox) actor).getSelected());
-            }
-        });
+//        contentTypeSelectBox.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                System.out.println("item change to: " + ((SelectBox) actor).getSelected());
+//            }
+//        });
         return contentTypeSelectBox;
     }
 
     private Slider initContentQualitySlider(final Skin skin) {
         final Slider contentQuality = new Slider(0, 100, 1, true, skin);
         contentQuality.setValue(100);
-        contentQuality.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("slider changed to: " + ((Slider) actor).getValue());
-            }
-        });
+//        contentQuality.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                System.out.println("slider changed to: " + ((Slider) actor).getValue());
+//            }
+//        });
 
         return contentQuality;
     }

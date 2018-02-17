@@ -1,5 +1,6 @@
 package com.crawn.game.widgets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.crawn.game.model.content.Content;
 import com.crawn.game.utils.components.Updatable;
@@ -15,8 +16,9 @@ final public class ProducingContentElementWidget extends Table implements Updata
         add(new ImageButton(skin, content.getImageStyle())).size(CONTENT_PICK_SIZE);
         final Table infoTable = new Table();
         infoTable.add(new Label(content.getTitle(), skin)).expandX().center().row();
-        infoTable.add(contentProgressBar);
-        add(infoTable);
+        infoTable.add(contentProgressBar).width((Gdx.graphics.getWidth() - CONTENT_PICK_SIZE) * 0.8f).left();
+        add(infoTable).width(Gdx.graphics.getWidth() - CONTENT_PICK_SIZE);
+        debug();
     }
 
     @Override

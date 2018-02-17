@@ -1,5 +1,6 @@
 package com.crawn.game.widgets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -36,7 +37,7 @@ public final class ContentElementWidget extends Table implements Observer {
         verticalGroup.add(dislikes).left().row();
         verticalGroup.add(views).left().row();
         verticalGroup.add(reposts).left().row();
-        add(verticalGroup);
+        add(verticalGroup).width(Gdx.graphics.getWidth() - CONTENT_PICK_SIZE);
     }
 
     @Override
