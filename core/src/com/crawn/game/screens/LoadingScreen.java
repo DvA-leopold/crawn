@@ -42,6 +42,7 @@ final public class LoadingScreen implements Screen {
 
         if (progress == 100) {
             MusicManager.instance().initialize();
+            // TODO refactor. move to btree loader
             BehaviorTreeLibraryManager.getInstance().getLibrary().registerArchetypeTree(
                     "villainAI",
                     (BehaviorTree) ResourceManager.instance().get("behavior_tree/villain.btree")

@@ -101,10 +101,6 @@ public abstract class Content extends Observable implements Comparable {
         return reposts;
     }
 
-    public void addViews(int value) {
-        views += value;
-    }
-
     public String getTitle() {
         return title;
     }

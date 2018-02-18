@@ -24,7 +24,7 @@ final public class MyAccount extends Account {
                         content.update();
                     }
                 } catch (ConcurrentModificationException err) {
-                    Gdx.app.error("Account", "concurrent modification exception");
+                    Gdx.app.error(getClass().getCanonicalName(), "concurrent modification exception");
                 }
 
                 for (Content content: accountContent) {
@@ -44,7 +44,7 @@ final public class MyAccount extends Account {
     public Content produceContent(String title, ContentType contentType, int quality, boolean monetize) {
         int contentPrice = Content.calculateContentPrice(contentType, quality);
         if (contentPrice > money) {
-            Gdx.app.log("Game", "not enought money to produce, price: " + contentPrice + " u have: " + money);
+            Gdx.app.log(getClass().getCanonicalName(), "not enought money to produce, price: " + contentPrice + " u have: " + money);
             return null;
         }
 

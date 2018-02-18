@@ -95,7 +95,7 @@ final public class ResourceManager {
             }
 
         } catch (FileNotFoundException e) {
-            Gdx.app.error("ResourceManager", e.getMessage());
+            Gdx.app.error(getClass().getCanonicalName(), e.getMessage());
         }
     }
 
@@ -125,7 +125,7 @@ final public class ResourceManager {
         if (mimeFileTypes.containsKey(fileExtension)) {
             assetManager.load(fileName, mimeFileTypes.get(fileExtension));
         } else {
-            Gdx.app.error("ResourceManager", "this file extension does not exits: " + fileExtension);
+            Gdx.app.error(getClass().getCanonicalName(), "this file extension does not exits: " + fileExtension);
         }
         if (sync) {
             assetManager.finishLoading();

@@ -90,7 +90,7 @@ final public class MusicManager {
                     }
                     break;
                 default:
-                    Gdx.app.error("MusicManager", "this music sample are not registered");
+                    Gdx.app.error(getClass().getCanonicalName(), "this music sample are not registered");
                     break;
             }
         }
@@ -110,7 +110,7 @@ final public class MusicManager {
                     }
                     break;
                 default:
-                    Gdx.app.error("MusicManager", "this music sample are not registered");
+                    Gdx.app.error(getClass().getCanonicalName(), "this music sample are not registered");
                     break;
             }
         }
@@ -130,7 +130,7 @@ final public class MusicManager {
                     }
                     break;
                 default:
-                    Gdx.app.error("MusicManager", "this music sample are not registered");
+                    Gdx.app.error(getClass().getCanonicalName(), "this music sample are not registered");
                     break;
             }
         }
@@ -160,15 +160,13 @@ final public class MusicManager {
     }
 
 
-    private MusicTypes currentMusicType;
-
-    private boolean musicManagerStarted;
-
     private Music mainSample;
     private Music additionSample;
 
-    final private HashMap<Class<? extends Screen>, MusicTypes> musicTable;
+    private MusicTypes currentMusicType;
 
+    private boolean musicManagerStarted;
     private boolean musicEnable;
+    final private HashMap<Class<? extends Screen>, MusicTypes> musicTable;
 }
 
