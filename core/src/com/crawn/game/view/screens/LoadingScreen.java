@@ -1,4 +1,4 @@
-package com.crawn.game.screens;
+package com.crawn.game.view.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.crawn.game.Crawn;
 import com.crawn.game.utils.MusicManager;
-import com.crawn.game.utils.resource.manager.ResourceManager;
+import com.crawn.game.model.resource.manager.ResourceManager;
 
 
 final public class LoadingScreen implements Screen {

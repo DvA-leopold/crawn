@@ -1,4 +1,4 @@
-package com.crawn.game.screens;
+package com.crawn.game.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

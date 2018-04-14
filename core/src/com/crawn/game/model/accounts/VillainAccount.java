@@ -3,13 +3,13 @@ package com.crawn.game.model.accounts;
 import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.ai.btree.utils.BehaviorTreeLibraryManager;
 import com.badlogic.gdx.utils.Timer;
-import com.crawn.game.model.content.Content;
+import com.crawn.game.model.Model;
 
 
 final public class VillainAccount extends Account {
-    public VillainAccount(final String nickName, long subscribers, long rating, long money) {
+    public VillainAccount(Model model, String nickName, long subscribers, long rating, long money) {
         super(nickName, subscribers, rating, money);
-        accountAI = BehaviorTreeLibraryManager.getInstance().createBehaviorTree("villainAI");
+        accountAI = BehaviorTreeLibraryManager.getInstance().createBehaviorTree("villainAI", model);
 
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
@@ -25,6 +25,5 @@ final public class VillainAccount extends Account {
     }
 
 
-    final private BehaviorTree<VillainAccount> accountAI;
-
+    final private BehaviorTree<Model> accountAI;
 }

@@ -1,8 +1,8 @@
-package com.crawn.game.utils.resource.manager.loaders;
+package com.crawn.game.model.resource.manager.loaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 
 
 final public class FreeTypeFontLoader extends FreetypeFontLoader {
-    public FreeTypeFontLoader() {
-        super(new InternalFileHandleResolver());
+    public FreeTypeFontLoader(FileHandleResolver resolver) {
+        super(resolver);
     }
 
     @Override

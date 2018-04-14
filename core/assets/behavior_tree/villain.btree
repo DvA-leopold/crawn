@@ -1,6 +1,7 @@
 import analyze:"com.crawn.game.model.ai.tasks.Analyze"
 import produce:"com.crawn.game.model.ai.tasks.Produce"
 import strike:"com.crawn.game.model.ai.tasks.Strike"
+import cooperate:"com.crawn.game.model.ai.tasks.Cooperate"
 
 
 root

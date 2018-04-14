@@ -78,5 +78,4 @@ public class Account extends Observable {
     long money;
 
     final TreeSet<Content> accountContent;
-
 }

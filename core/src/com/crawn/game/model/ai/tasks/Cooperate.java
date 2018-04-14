@@ -5,11 +5,11 @@ import com.badlogic.gdx.ai.btree.Task;
 import com.crawn.game.model.Model;
 
 
-public class Strike extends LeafTask<Model> {
+public class Cooperate extends LeafTask<Model> {
     @Override
     public Status execute() {
-        System.out.println("strike");
-        return Status.RUNNING;
+        System.out.println("cooperate");
+        return null;
     }
 
     @Override

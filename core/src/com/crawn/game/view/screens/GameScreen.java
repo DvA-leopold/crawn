@@ -1,4 +1,4 @@
-package com.crawn.game.screens;
+package com.crawn.game.view.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,25 +8,21 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.Crawn;
-import com.crawn.game.model.accounts.MyAccount;
-import com.crawn.game.model.accounts.VillainAccount;
-import com.crawn.game.utils.resource.manager.ResourceManager;
-import com.crawn.game.widgets.GameWidgetGroup;
-
-import java.util.Vector;
+import com.crawn.game.model.Model;
+import com.crawn.game.model.resource.manager.ResourceManager;
+import com.crawn.game.view.widgets.GameWidgetGroup;
 
 
 final public class GameScreen implements Screen {
     GameScreen() {
         batch = ((Crawn) Gdx.app.getApplicationListener()).getMainBatch();
         background = new Sprite((Texture) ResourceManager.instance().get("textures/bg.jpg"));
-        myAccount = new MyAccount("awesome acc", 0 , 0, 100000);
-        villainAccounts = new Vector<>();
+        model = new Model();
     }
 
     @Override
     public void show() {
-        ((Crawn) Gdx.app.getApplicationListener()).getStage().addActor(new GameWidgetGroup(myAccount, villainAccounts));
+        ((Crawn) Gdx.app.getApplicationListener()).getStage().addActor(new GameWidgetGroup(model));
     }
 
     @Override
@@ -47,11 +43,8 @@ final public class GameScreen implements Screen {
 
     @Override
     public void resume() {
-        Timer.instance().delay(TimeUtils.millis() - timerDelay);
-        myAccount.resume(timerDelay);
-        for (VillainAccount villainAccount: villainAccounts) {
-            villainAccount.resume(timerDelay);
-        }
+        Timer.instance().delay(TimeUtils.timeSinceMillis(timerDelay));
+        model.resume(timerDelay);
         Timer.instance().start();
     }
 
@@ -61,7 +54,9 @@ final public class GameScreen implements Screen {
     }
 
     @Override
-    public void dispose() { }
+    public void dispose() {
+        model.dispose();
+    }
 
 
     private long timerDelay;
@@ -69,7 +64,5 @@ final public class GameScreen implements Screen {
     final private Sprite background;
     final private Batch batch;
 
-    final private MyAccount myAccount;
-    final private Vector<VillainAccount> villainAccounts;
-
+    final private Model model;
 }

@@ -8,10 +8,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.crawn.game.screens.LoadingScreen;
+import com.crawn.game.view.screens.LoadingScreen;
 import com.crawn.game.utils.DebugStatistic;
 import com.crawn.game.utils.MusicManager;
-import com.crawn.game.utils.resource.manager.ResourceManager;
+import com.crawn.game.model.resource.manager.ResourceManager;
 
 
 final public class Crawn extends Game {

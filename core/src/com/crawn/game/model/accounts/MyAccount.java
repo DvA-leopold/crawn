@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.crawn.game.model.content.*;
 
-import java.util.ConcurrentModificationException;
 import java.util.HashSet;
-import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 
 final public class MyAccount extends Account {
@@ -17,18 +17,13 @@ final public class MyAccount extends Account {
         Timer.instance().scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                try {
-                    // FIXME concurrent modification throw
-                    for (Content content: producingContent) {
-                        content.notifyObservers(content.getFinishPercent());
-                        content.update();
-                    }
-                } catch (ConcurrentModificationException err) {
-                    Gdx.app.error(getClass().getCanonicalName(), "concurrent modification exception");
-                }
-
                 for (Content content: accountContent) {
                     content.recalculateContentRating(subscribers);
+                }
+
+                for (Content content: producingContent) {
+                    content.notifyObservers(content.getFinishPercent());
+                    content.update();
                 }
             }
         }, 1, 1, Integer.MAX_VALUE);
@@ -44,13 +39,13 @@ final public class MyAccount extends Account {
     public Content produceContent(String title, ContentType contentType, int quality, boolean monetize) {
         int contentPrice = Content.calculateContentPrice(contentType, quality);
         if (contentPrice > money) {
-            Gdx.app.log(getClass().getCanonicalName(), "not enought money to produce, price: " + contentPrice + " u have: " + money);
+            Gdx.app.log(getClass().getCanonicalName(), "not enough money to produce, price: " + contentPrice + " u have: " + money);
             return null;
         }
 
         final Content content = createContent(title, contentType, quality, monetize);
         producingContent.add(content);
-        Objects.requireNonNull(content).initTask(new Timer.Task() {
+        requireNonNull(content).initTask(new Timer.Task() {
             @Override
             public void run() {
                 accountContent.add(content);
@@ -74,4 +69,5 @@ final public class MyAccount extends Account {
 
 
     final private HashSet<Content> producingContent;
+
 }

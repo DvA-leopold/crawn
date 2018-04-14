@@ -1,7 +1,7 @@
 package com.crawn.game.utils;
 
 import com.badlogic.gdx.utils.I18NBundle;
-import com.crawn.game.utils.resource.manager.ResourceManager;
+import com.crawn.game.model.resource.manager.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.Collections;

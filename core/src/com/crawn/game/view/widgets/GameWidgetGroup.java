@@ -1,33 +1,30 @@
-package com.crawn.game.widgets;
+package com.crawn.game.view.widgets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.crawn.game.model.accounts.MyAccount;
-import com.crawn.game.model.accounts.VillainAccount;
-import com.crawn.game.utils.resource.manager.ResourceManager;
-
-import java.util.Vector;
+import com.crawn.game.model.Model;
+import com.crawn.game.model.resource.manager.ResourceManager;
 
 import static com.crawn.game.utils.StaticUtils.MENU_BUTTON_HEIGHT;
 
 
 final public class GameWidgetGroup extends Table {
-    public GameWidgetGroup(final MyAccount myAccount, final Vector<VillainAccount> villainAccounts) {
+    public GameWidgetGroup(final Model model) {
         setFillParent(true);
         top().left();
 
-        accountContentPane = new ElementScrollPane(myAccount);
-        villainAccountsPane = new ElementScrollPane(villainAccounts);
-        accountInfoWidget = new AccountInfoWidget(myAccount);
-        homeWidget = new HomeWidget(myAccount);
+        AccountInfoWidget mainAccountInfo = new AccountInfoWidget(model.getMyAccount());
+        accountContentPane = new ElementScrollPane(model.getMyAccount());
+        villainAccountsPane = new ElementScrollPane(model.getVillainAccounts());
+        homeWidget = new HomeWidget(model.getMyAccount());
 
-        myAccount.addObserver(homeWidget);
-        myAccount.addObserver(accountContentPane);
-        myAccount.addObserver(accountInfoWidget);
+        model.getMyAccount().addObserver(mainAccountInfo);
+        model.getMyAccount().addObserver(accountContentPane);
+        model.getMyAccount().addObserver(homeWidget);
 
-        add(accountInfoWidget).top().left().row();
+        add(mainAccountInfo).top().left().row();
         add(initButtonsTable()).row();
         final Stack paneStack = new Stack();
         paneStack.add(accountContentPane);
@@ -37,13 +34,12 @@ final public class GameWidgetGroup extends Table {
     }
 
     private Table initButtonsTable() {
-        final Skin skin = (Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json");
         final Table menuButtonsTable = new Table();
         final ButtonGroup<ImageButton> settingsButtonGroup = new ButtonGroup<>();
         settingsButtonGroup.setMinCheckCount(1);
 
         for (int i = 0; i < 3; ++i) {
-            final ImageButton menuButton = new ImageButton(skin);
+            final ImageButton menuButton = new ImageButton((Skin) ResourceManager.instance().get("game_skin/game_widget_skin.json"));
             // FIXME button size is proportional, image height and width wont change independently
             menuButtonsTable.add(menuButton).size(Gdx.graphics.getWidth() / 3, MENU_BUTTON_HEIGHT);
             settingsButtonGroup.add(menuButton);
@@ -68,5 +64,4 @@ final public class GameWidgetGroup extends Table {
     final private ElementScrollPane accountContentPane;
     final private ScrollPane villainAccountsPane;
     final private HomeWidget homeWidget;
-    final private AccountInfoWidget accountInfoWidget;
 }

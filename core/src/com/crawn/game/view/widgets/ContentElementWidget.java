@@ -1,13 +1,11 @@
-package com.crawn.game.widgets;
+package com.crawn.game.view.widgets;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.crawn.game.model.content.Content;
 import com.crawn.game.utils.components.Observable;
 import com.crawn.game.utils.components.Observer;
-import com.crawn.game.utils.resource.manager.ResourceManager;
+import com.crawn.game.model.resource.manager.ResourceManager;
 
 import static com.crawn.game.utils.StaticUtils.CONTENT_PICK_SIZE;
 

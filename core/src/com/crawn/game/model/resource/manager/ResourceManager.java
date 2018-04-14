@@ -1,4 +1,4 @@
-package com.crawn.game.utils.resource.manager;
+package com.crawn.game.model.resource.manager;
 
 
 import com.badlogic.gdx.Audio;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.ai.btree.utils.BehaviorTreeLoader;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,9 +17,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.crawn.game.model.accounts.MyAccount;
-import com.crawn.game.utils.resource.manager.loaders.FreeTypeFontLoader;
-import com.crawn.game.utils.resource.manager.loaders.FreeTypeFontSkinLoader;
-import com.crawn.game.utils.resource.manager.loaders.PlayAccountLoader;
+import com.crawn.game.model.resource.manager.loaders.FreeTypeFontLoader;
+import com.crawn.game.model.resource.manager.loaders.SkinWithGeneratedFreeTypeFontLoader;
+import com.crawn.game.model.resource.manager.loaders.PlayAccountLoader;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -29,11 +28,11 @@ import java.util.*;
 final public class ResourceManager {
     private ResourceManager() {
         assetManager = new AssetManager();
-        assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver())); // TODO do i really need this?
-        assetManager.setLoader(BitmapFont.class, new FreeTypeFontLoader());
-        assetManager.setLoader(MyAccount.class, new PlayAccountLoader());
-        assetManager.setLoader(Skin.class, new FreeTypeFontSkinLoader());
-        assetManager.setLoader(BehaviorTree.class, new BehaviorTreeLoader(new InternalFileHandleResolver()));
+        assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(assetManager.getFileHandleResolver()));
+        assetManager.setLoader(BitmapFont.class, new FreeTypeFontLoader(assetManager.getFileHandleResolver()));
+        assetManager.setLoader(MyAccount.class, new PlayAccountLoader(assetManager.getFileHandleResolver()));
+        assetManager.setLoader(Skin.class, new SkinWithGeneratedFreeTypeFontLoader(assetManager.getFileHandleResolver()));
+        assetManager.setLoader(BehaviorTree.class, new BehaviorTreeLoader(assetManager.getFileHandleResolver()));
 
         mimeFileTypes = new Hashtable<>();
         mimeFileTypes.put("png", Texture.class);
@@ -68,10 +67,9 @@ final public class ResourceManager {
      * @param sync if this is true then we will wait till all files are load
      */
     public void loadSection(String section, boolean sync) {
-        FileHandle sectionRoot = Gdx.files.internal(section);
+        FileHandle sectionRoot = Gdx.files.local(section);
         try {
-            FileHandle[] allFiles = getFiles(sectionRoot);
-            for (FileHandle file: allFiles) {
+            for (FileHandle file: getFiles(sectionRoot)) {
                 String fileName = file.file().getName();
                 String extension = getExtension(fileName);
                 if (mimeFileTypes.containsKey(extension)) {
@@ -81,6 +79,7 @@ final public class ResourceManager {
                             break;
                         case "ttf":
                         {
+
                             FreetypeFontLoader.FreeTypeFontLoaderParameter params = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
                             params.fontFileName = sectionRoot.path() + "/" + fileName;
                             assetManager.load(file.path(), BitmapFont.class, params); // TODO try to refactor
@@ -106,8 +105,7 @@ final public class ResourceManager {
     public void unloadSection(String section) {
         FileHandle sectionRoot = Gdx.files.internal(section);
         try {
-            FileHandle[] allFiles = getFiles(sectionRoot);
-            for (FileHandle allFile: allFiles) {
+            for (FileHandle allFile: getFiles(sectionRoot)) {
                 assetManager.unload(allFile.path());
             }
         } catch (FileNotFoundException e) {
@@ -127,9 +125,12 @@ final public class ResourceManager {
         } else {
             Gdx.app.error(getClass().getCanonicalName(), "this file extension does not exits: " + fileExtension);
         }
+
         if (sync) {
             assetManager.finishLoading();
         }
+
+        Gdx.app.log(getClass().getCanonicalName(), "loading finished for: " + fileName);
     }
 
     public void unloadFile(String fileName) {
@@ -149,35 +150,33 @@ final public class ResourceManager {
         assetManager.dispose();
     }
 
-    private FileHandle[] getFiles(FileHandle sectionForLoading) throws FileNotFoundException {
+    private ArrayList<FileHandle> getFiles(FileHandle sectionForLoading) throws FileNotFoundException {
         if (!sectionForLoading.isDirectory()) {
-            throw new FileNotFoundException(" this is not a directory: " + sectionForLoading.path());
+            throw new FileNotFoundException(" this is not a directory: " + sectionForLoading.path() + " type: " + sectionForLoading.type());
         }
-        Queue<FileHandle> fileHandles = new LinkedList<>();
-        LinkedList<FileHandle> filesList = new LinkedList<>();
+        ArrayDeque<FileHandle> directoriesQueue = new ArrayDeque<>();
+        ArrayList<FileHandle> filesList = new ArrayList<>(50);
 
-        fileHandles.add(sectionForLoading);
-        while (!fileHandles.isEmpty()) {
-            FileHandle[] filesInFolder = fileHandles.poll().list();
-            for (FileHandle aFilesInFolder: filesInFolder) {
-                if (aFilesInFolder.isDirectory()) {
-                    fileHandles.add(aFilesInFolder);
+        directoriesQueue.add(sectionForLoading);
+        while (!directoriesQueue.isEmpty()) {
+            FileHandle handle = directoriesQueue.poll();
+            if (handle == null)
+                continue;
+
+            for (FileHandle file: handle.list()) {
+                if (file.isDirectory()) {
+                    directoriesQueue.add(file);
                 } else {
-                    filesList.add(aFilesInFolder);
+                    filesList.add(file);
                 }
             }
         }
-        FileHandle[] filesListArray = new FileHandle[filesList.size()];
-        filesList.toArray(filesListArray);
-        return filesListArray;
+        return filesList;
     }
 
-    private String getExtension(String filePath) throws NoSuchElementException {
+    private String getExtension(String filePath) {
         int index = filePath.lastIndexOf(".");
-        if (index == -1) {
-            throw new NoSuchElementException("this file had no extension");
-        }
-        return filePath.substring(index + 1);
+        return (index == -1) ? "" : filePath.substring(index + 1);
     }
 
     private static class SingletonHolder {

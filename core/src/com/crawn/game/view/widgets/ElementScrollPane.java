@@ -1,8 +1,8 @@
-package com.crawn.game.widgets;
+package com.crawn.game.view.widgets;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.crawn.game.model.accounts.MyAccount;
+import com.crawn.game.model.accounts.Account;
 import com.crawn.game.model.accounts.VillainAccount;
 import com.crawn.game.model.content.Content;
 import com.crawn.game.utils.components.Observable;
@@ -18,7 +18,7 @@ final public class ElementScrollPane extends ScrollPane implements Observer {
         setVisible(false);
     }
 
-    ElementScrollPane(final MyAccount account) {
+    ElementScrollPane(final Account account) {
         super(initContentScrollPane(account));
     }
 
@@ -31,7 +31,7 @@ final public class ElementScrollPane extends ScrollPane implements Observer {
         }
     }
 
-    static private VerticalGroup initContentScrollPane(final MyAccount account){
+    static private VerticalGroup initContentScrollPane(final Account account){
         final VerticalGroup contentGroup = new VerticalGroup().columnLeft().left().reverse();
         final TreeSet<Content> contentElements = account.getContentElements();
         for (Content contentElement: contentElements) {

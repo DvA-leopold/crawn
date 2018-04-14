@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.crawn.game.Crawn;
-import com.crawn.game.utils.resource.manager.ResourceManager;
+import com.crawn.game.model.resource.manager.ResourceManager;
 
 
 final public class DebugStatistic {

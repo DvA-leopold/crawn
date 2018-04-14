@@ -1,8 +1,9 @@
-package com.crawn.game.utils.resource.manager.loaders;
+package com.crawn.game.model.resource.manager.loaders;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
@@ -12,8 +13,8 @@ import com.crawn.game.model.accounts.MyAccount;
 
 
 final public class PlayAccountLoader extends SynchronousAssetLoader<MyAccount, PlayAccountLoader.PlayAccountParameter> {
-    public PlayAccountLoader() {
-        super(new InternalFileHandleResolver());
+    public PlayAccountLoader(FileHandleResolver resolver) {
+        super(resolver);
     }
 
     @Override
